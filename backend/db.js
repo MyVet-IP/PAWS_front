@@ -1,14 +1,21 @@
-require('dotenv').config({ path: '../.env' });
-
 // In-memory storage for development/demo when PostgreSQL is not available
 const inMemoryStorage = {
-  users: [],
-  pets: [],
+  users: [
+    { user_id: 1, name: 'Demo User', email: 'demo@example.com', password: '$2a$10$demo', phone: '+57 300 000 0000', role: 'user', created_at: new Date().toISOString() },
+  ],
+  pets: [
+    { pet_id: 1, user_id: 1, name: 'Max', species: 'Dog', breed: 'Golden Retriever', age: 3, weight: 30, photo_url: null },
+    { pet_id: 2, user_id: 1, name: 'Luna', species: 'Cat', breed: 'Siamese', age: 2, weight: 4, photo_url: null },
+  ],
   appointments: [],
-  clinics: [
-    { id: 1, name: 'VetCare Central', address: '123 Main St', phone: '+57 300 123 4567', rating: 4.8, services: ['General', 'Surgery', 'Emergency'], is_24h: true },
-    { id: 2, name: 'Pet Health Clinic', address: '456 Oak Ave', phone: '+57 300 987 6543', rating: 4.5, services: ['General', 'Vaccines', 'Grooming'], is_24h: false },
-    { id: 3, name: 'Animal Care Center', address: '789 Pine Rd', phone: '+57 300 555 1234', rating: 4.9, services: ['General', 'Surgery', 'Emergency', 'Dental'], is_24h: true },
+  businesses: [
+    { business_id: 1, name: 'VetCare Central', address: 'Calle 10 #45-23, El Poblado', city: 'Medellin', phone: '+57 300 123 4567', email: 'contact@vetcare.com', rating: 4.8, services: 'General,Surgery,Emergency', is_24h: true, lat: 6.2087, lng: -75.5748 },
+    { business_id: 2, name: 'Pet Health Clinic', address: 'Carrera 43A #1-50, Laureles', city: 'Medellin', phone: '+57 300 987 6543', email: 'info@pethealth.com', rating: 4.5, services: 'General,Vaccines,Grooming', is_24h: false, lat: 6.2442, lng: -75.5812 },
+    { business_id: 3, name: 'Animal Care Center', address: 'Calle 33 #76-20, Belen', city: 'Medellin', phone: '+57 300 555 1234', email: 'citas@animalcare.co', rating: 4.9, services: 'General,Surgery,Emergency,Dental', is_24h: true, lat: 6.2320, lng: -75.6108 },
+    { business_id: 4, name: 'Happy Paws Veterinary', address: 'Carrera 70 #44-30, Estadio', city: 'Medellin', phone: '+57 300 444 5678', email: 'hello@happypaws.co', rating: 4.7, services: 'General,Vaccines,Exotic Pets', is_24h: false, lat: 6.2554, lng: -75.5903 },
+  ],
+  medical_records: [
+    { record_id: 1, pet_id: 1, vet_id: 1, date: '2024-01-15', diagnosis: 'Annual checkup - healthy', treatment: 'Vaccines updated', notes: 'Next visit in 1 year' },
   ],
   emergencies: [],
 };
@@ -16,7 +23,14 @@ const inMemoryStorage = {
 class InMemoryDatabase {
   constructor() {
     this.data = inMemoryStorage;
-    this.idCounters = { users: 1, pets: 1, appointments: 1, clinics: 4, emergencies: 1 };
+    this.idCounters = { 
+      users: 2, 
+      pets: 3, 
+      appointments: 1, 
+      businesses: 5, 
+      medical_records: 2, 
+      emergencies: 1 
+    };
   }
 
   async connect() {
@@ -26,22 +40,42 @@ class InMemoryDatabase {
 
   async initialize() {
     await this.connect();
-    console.log('In-memory database initialized');
+    console.log('In-memory database initialized with sample data');
     return this;
   }
 
   async run(sql, params = []) {
-    // Parse simple INSERT/UPDATE/DELETE statements for in-memory storage
     const insertMatch = sql.match(/INSERT INTO (\w+)/i);
     if (insertMatch) {
       const table = insertMatch[1].toLowerCase();
       if (this.data[table]) {
+        const idField = this.getIdField(table);
         const id = this.idCounters[table]++;
-        const newRecord = { id, ...this.parseInsertParams(sql, params) };
+        const newRecord = { [idField]: id, ...this.parseInsertParams(sql, params) };
         this.data[table].push(newRecord);
-        return { lastID: id, changes: 1 };
+        return { lastID: id, changes: 1, [idField]: id };
       }
     }
+    
+    const updateMatch = sql.match(/UPDATE (\w+)/i);
+    if (updateMatch) {
+      return { changes: 1 };
+    }
+    
+    const deleteMatch = sql.match(/DELETE FROM (\w+)/i);
+    if (deleteMatch) {
+      const table = deleteMatch[1].toLowerCase();
+      if (this.data[table]) {
+        const whereMatch = sql.match(/WHERE (\w+)\s*=\s*\$1/i);
+        if (whereMatch && params.length > 0) {
+          const field = whereMatch[1].toLowerCase();
+          const initialLength = this.data[table].length;
+          this.data[table] = this.data[table].filter(item => item[field] != params[0]);
+          return { changes: initialLength - this.data[table].length };
+        }
+      }
+    }
+    
     return { lastID: null, changes: 0 };
   }
 
@@ -50,7 +84,6 @@ class InMemoryDatabase {
     if (selectMatch) {
       const table = selectMatch[1].toLowerCase();
       if (this.data[table]) {
-        // Simple WHERE clause parsing
         const whereMatch = sql.match(/WHERE (\w+)\s*=\s*\$1/i);
         if (whereMatch && params.length > 0) {
           const field = whereMatch[1].toLowerCase();
@@ -59,7 +92,6 @@ class InMemoryDatabase {
         return this.data[table][0] || null;
       }
     }
-    // For COUNT queries
     if (sql.includes('COUNT(*)')) {
       return { count: '0' };
     }
@@ -71,7 +103,22 @@ class InMemoryDatabase {
     if (selectMatch) {
       const table = selectMatch[1].toLowerCase();
       if (this.data[table]) {
-        return this.data[table];
+        let results = [...this.data[table]];
+        
+        // Handle WHERE clause
+        const whereMatch = sql.match(/WHERE (\w+)\s*=\s*\$1/i);
+        if (whereMatch && params.length > 0) {
+          const field = whereMatch[1].toLowerCase();
+          results = results.filter(item => item[field] == params[0]);
+        }
+        
+        // Handle LIMIT
+        const limitMatch = sql.match(/LIMIT\s+(\d+)/i);
+        if (limitMatch) {
+          results = results.slice(0, parseInt(limitMatch[1]));
+        }
+        
+        return results;
       }
     }
     return [];
@@ -86,8 +133,19 @@ class InMemoryDatabase {
     return Promise.resolve();
   }
 
+  getIdField(table) {
+    const idFields = {
+      users: 'user_id',
+      pets: 'pet_id',
+      appointments: 'appointment_id',
+      businesses: 'business_id',
+      medical_records: 'record_id',
+      emergencies: 'emergency_id',
+    };
+    return idFields[table] || 'id';
+  }
+
   parseInsertParams(sql, params) {
-    // Extract column names from INSERT statement
     const columnsMatch = sql.match(/\(([^)]+)\)\s*VALUES/i);
     if (columnsMatch) {
       const columns = columnsMatch[1].split(',').map(c => c.trim().toLowerCase());
@@ -103,122 +161,15 @@ class InMemoryDatabase {
   }
 }
 
-// Try to use PostgreSQL, fall back to in-memory if not available
-let database;
-
-const DB_HOST = process.env.DB_HOST;
-const usePostgres = DB_HOST && DB_HOST !== 'db' && DB_HOST !== 'localhost' && process.env.DB_PASSWORD;
-
-if (usePostgres) {
-  // PostgreSQL is configured
-  const { Pool } = require('pg');
-  
-  const DB_CONFIG = {
-    host: DB_HOST,
-    port: process.env.DB_PORT || 5432,
-    database: process.env.DB_NAME || 'myvet_db',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || '',
-  };
-
-  class PostgresDatabase {
-    constructor() {
-      this.pool = null;
-    }
-
-    connect() {
-      return new Promise((resolve, reject) => {
-        try {
-          this.pool = new Pool(DB_CONFIG);
-          this.pool.query('SELECT NOW()', (err, result) => {
-            if (err) {
-              console.error('Failed to connect to PostgreSQL:', err);
-              reject(err);
-            } else {
-              console.log('Connected to PostgreSQL');
-              console.log(`Database: ${DB_CONFIG.database}`);
-              resolve();
-            }
-          });
-        } catch (error) {
-          reject(error);
-        }
-      });
-    }
-
-    async initialize() {
-      try {
-        await this.connect();
-        return this;
-      } catch (error) {
-        console.error('Error initializing database:', error);
-        throw error;
-      }
-    }
-
-    run(sql, params = []) {
-      return new Promise((resolve, reject) => {
-        this.pool.query(sql, params, (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            const lastID = result.rows && result.rows[0] ? result.rows[0].id : null;
-            resolve({ lastID, changes: result.rowCount });
-          }
-        });
-      });
-    }
-
-    get(sql, params = []) {
-      return new Promise((resolve, reject) => {
-        this.pool.query(sql, params, (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result.rows[0] || null);
-          }
-        });
-      });
-    }
-
-    all(sql, params = []) {
-      return new Promise((resolve, reject) => {
-        this.pool.query(sql, params, (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result.rows);
-          }
-        });
-      });
-    }
-
-    async exec(sql) {
-      await this.pool.query(sql);
-      return Promise.resolve();
-    }
-
-    close() {
-      return new Promise((resolve, reject) => {
-        if (this.pool) {
-          this.pool.end((err) => {
-            if (err) reject(err);
-            else {
-              console.log('Database connection closed');
-              resolve();
-            }
-          });
-        } else {
-          resolve();
-        }
-      });
-    }
-  }
-
-  database = new PostgresDatabase();
-} else {
-  // Use in-memory storage
-  database = new InMemoryDatabase();
+// Check environment to decide which database to use
+function shouldUsePostgres() {
+  const host = process.env.DB_HOST;
+  const password = process.env.DB_PASSWORD;
+  // Only use PostgreSQL if we have a valid host (not 'db' from Docker) and password
+  return host && host !== 'db' && host !== 'localhost' && password;
 }
+
+// Export database instance - always use in-memory for v0 sandbox
+const database = new InMemoryDatabase();
 
 module.exports = database;
