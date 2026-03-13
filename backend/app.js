@@ -43,17 +43,29 @@ app.use(notFound);
 app.use(errorHandler);
 
 // ── Arranque ──────────────────────────────────────────────────────────────────
-async function startServer(port = PORT) {
+let dbInitialized = false;
+
+async function startServer(portArg) {
+  const port = typeof portArg === 'number' ? portArg : PORT;
+  
+  // Validate port range
+  if (port < 1 || port >= 65536) {
+    console.error(`Invalid port: ${port}. Using default 3001.`);
+    return startServer(3001);
+  }
+  
   try {
-    await db.initialize();
+    if (!dbInitialized) {
+      await db.initialize();
+      dbInitialized = true;
+    }
     
     const server = require('http').createServer(app);
     
     server.on('error', (err) => {
-      if (err.code === 'EADDRINUSE') {
-        const nextPort = Number(port) + 1;
+      if (err.code === 'EADDRINUSE' && port < 65535) {
+        const nextPort = port + 1;
         console.log(`Port ${port} is in use, trying ${nextPort}...`);
-        server.close();
         startServer(nextPort);
       } else {
         console.error('Server error:', err);
