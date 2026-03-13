@@ -46,22 +46,28 @@ app.use(errorHandler);
 async function startServer(port = PORT) {
   try {
     await db.initialize();
-    const server = app.listen(port, () => {
-      console.log(`\n========================================`);
-      console.log(` Server: http://localhost:${port}`);
-      console.log(` API:    http://localhost:${port}/api/health`);
-      console.log(`========================================\n`);
-    });
+    
+    const server = require('http').createServer(app);
     
     server.on('error', (err) => {
       if (err.code === 'EADDRINUSE') {
         console.log(`Port ${port} is in use, trying ${port + 1}...`);
+        server.close();
         startServer(port + 1);
       } else {
         console.error('Server error:', err);
         process.exit(1);
       }
     });
+    
+    server.on('listening', () => {
+      console.log(`\n========================================`);
+      console.log(` Server: http://localhost:${port}`);
+      console.log(` API:    http://localhost:${port}/api/health`);
+      console.log(`========================================\n`);
+    });
+    
+    server.listen(port);
   } catch (err) {
     console.error('Error iniciando servidor:', err);
     process.exit(1);
