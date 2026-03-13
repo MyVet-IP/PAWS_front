@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env' });
+// Backend Express App - No database required (in-memory storage)
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -6,26 +6,26 @@ const db = require('./db');
 const { errorHandler, notFound } = require('./middleware');
 
 const app = express();
-const PORT = parseInt(process.env.PORT, 10) || 3000;
+const PORT = 3000;
 
-// ── Middlewares básicos ──────────────────────────────────────────────────────
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Estáticos del frontend ───────────────────────────────────────────────────
-const noCache = {
+// Static files
+const staticOptions = {
   etag: false,
   lastModified: false,
   setHeaders: res => res.setHeader('Cache-Control', 'no-store')
 };
-app.use(express.static(path.join(__dirname, '..'), noCache));
-app.use(express.static(path.join(__dirname, '..', 'frontend'), noCache));
+app.use(express.static(path.join(__dirname, '..'), staticOptions));
+app.use(express.static(path.join(__dirname, '..', 'frontend'), staticOptions));
 
-// ── Health check ─────────────────────────────────────────────────────────────
-app.get('/api/health', (req, res) => res.json({ ok: true, message: 'API corriendo' }));
+// Health check
+app.get('/api/health', (req, res) => res.json({ ok: true, message: 'API running', mode: 'in-memory' }));
 
-// ── Rutas API ─────────────────────────────────────────────────────────────────
+// API Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/pets', require('./routes/pets'));
@@ -33,62 +33,62 @@ app.use('/api/businesses', require('./routes/businesses'));
 app.use('/api/medical-records', require('./routes/medicalRecords'));
 app.use('/api/emergencies', require('./routes/emergencies'));
 
-// ── SPA fallback — redirige todo lo que no sea /api al index.html ─────────────
+// SPA fallback
 app.get(/^\/(?!api)(?:[^.]*)?$/, (req, res) =>
   res.sendFile(path.join(__dirname, '..', 'index.html'))
 );
 
-// ── Error handlers (siempre al final) ────────────────────────────────────────
+// Error handlers
 app.use(notFound);
 app.use(errorHandler);
 
-// ── Arranque ──────────────────────────────────────────────────────────────────
-let dbInitialized = false;
+// Server startup with port retry
+const http = require('http');
 
-async function startServer(portArg) {
-  const port = typeof portArg === 'number' ? portArg : PORT;
+function startServer(port) {
+  const currentPort = Number(port) || PORT;
   
-  // Validate port range
-  if (port < 1 || port >= 65536) {
-    console.error(`Invalid port: ${port}. Using default 3001.`);
-    return startServer(3001);
-  }
-  
-  try {
-    if (!dbInitialized) {
-      await db.initialize();
-      dbInitialized = true;
-    }
-    
-    const server = require('http').createServer(app);
-    
-    server.on('error', (err) => {
-      if (err.code === 'EADDRINUSE' && port < 65535) {
-        const nextPort = port + 1;
-        console.log(`Port ${port} is in use, trying ${nextPort}...`);
-        startServer(nextPort);
-      } else {
-        console.error('Server error:', err);
-        process.exit(1);
-      }
-    });
-    
-    server.on('listening', () => {
-      console.log(`\n========================================`);
-      console.log(` Server: http://localhost:${port}`);
-      console.log(` API:    http://localhost:${port}/api/health`);
-      console.log(`========================================\n`);
-    });
-    
-    server.listen(port);
-  } catch (err) {
-    console.error('Error iniciando servidor:', err);
+  if (currentPort > 65535) {
+    console.error('No available ports found');
     process.exit(1);
   }
+
+  const server = http.createServer(app);
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`Port ${currentPort} busy, trying ${currentPort + 1}...`);
+      setTimeout(() => startServer(currentPort + 1), 100);
+    } else {
+      console.error('Server error:', err);
+      process.exit(1);
+    }
+  });
+
+  server.on('listening', () => {
+    console.log(`\n========================================`);
+    console.log(` VetCare Server Running`);
+    console.log(` URL: http://localhost:${currentPort}`);
+    console.log(` API: http://localhost:${currentPort}/api/health`);
+    console.log(` Mode: In-Memory Storage`);
+    console.log(`========================================\n`);
+  });
+
+  // Initialize DB then start listening
+  db.initialize()
+    .then(() => {
+      server.listen(currentPort);
+    })
+    .catch(err => {
+      console.error('DB init error:', err);
+      // Start anyway with empty data
+      server.listen(currentPort);
+    });
 }
 
-process.on('SIGINT', async () => { await db.close(); process.exit(0); });
-process.on('SIGTERM', async () => { await db.close(); process.exit(0); });
+// Graceful shutdown
+process.on('SIGINT', () => { db.close(); process.exit(0); });
+process.on('SIGTERM', () => { db.close(); process.exit(0); });
 
-startServer();
+startServer(PORT);
 module.exports = app;

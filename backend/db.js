@@ -1,7 +1,10 @@
-// In-memory storage for development/demo when PostgreSQL is not available
-const inMemoryStorage = {
+// Pure In-Memory Database - No PostgreSQL required
+// This provides a simple storage solution for development/demo
+
+const storage = {
   users: [
     { user_id: 1, name: 'Demo User', email: 'demo@example.com', password: '$2a$10$demo', phone: '+57 300 000 0000', role: 'user', created_at: new Date().toISOString() },
+    { user_id: 2, name: 'Dr. Maria Garcia', email: 'vet@example.com', password: '$2a$10$demo', phone: '+57 300 111 1111', role: 'vet', created_at: new Date().toISOString() },
   ],
   pets: [
     { pet_id: 1, user_id: 1, name: 'Max', species: 'Dog', breed: 'Golden Retriever', age: 3, weight: 30, photo_url: null },
@@ -15,44 +18,58 @@ const inMemoryStorage = {
     { business_id: 4, name: 'Happy Paws Veterinary', address: 'Carrera 70 #44-30, Estadio', city: 'Medellin', phone: '+57 300 444 5678', email: 'hello@happypaws.co', rating: 4.7, services: 'General,Vaccines,Exotic Pets', is_24h: false, lat: 6.2554, lng: -75.5903 },
   ],
   medical_records: [
-    { record_id: 1, pet_id: 1, vet_id: 1, date: '2024-01-15', diagnosis: 'Annual checkup - healthy', treatment: 'Vaccines updated', notes: 'Next visit in 1 year' },
+    { record_id: 1, pet_id: 1, vet_id: 2, date: '2024-01-15', diagnosis: 'Annual checkup - healthy', treatment: 'Vaccines updated', notes: 'Next visit in 1 year' },
   ],
   emergencies: [],
 };
 
-class InMemoryDatabase {
-  constructor() {
-    this.data = inMemoryStorage;
-    this.idCounters = { 
-      users: 2, 
-      pets: 3, 
-      appointments: 1, 
-      businesses: 5, 
-      medical_records: 2, 
-      emergencies: 1 
-    };
-  }
+const idCounters = { 
+  users: 3, 
+  pets: 3, 
+  appointments: 1, 
+  businesses: 5, 
+  medical_records: 2, 
+  emergencies: 1 
+};
 
-  async connect() {
-    console.log('Using in-memory storage (PostgreSQL not available)');
-    return Promise.resolve();
-  }
+function getIdField(table) {
+  const fields = {
+    users: 'user_id',
+    pets: 'pet_id',
+    appointments: 'appointment_id',
+    businesses: 'business_id',
+    medical_records: 'record_id',
+    emergencies: 'emergency_id',
+  };
+  return fields[table] || 'id';
+}
 
+const db = {
   async initialize() {
-    await this.connect();
-    console.log('In-memory database initialized with sample data');
+    console.log('In-memory database initialized');
     return this;
-  }
+  },
+
+  async close() {
+    console.log('Database closed');
+  },
 
   async run(sql, params = []) {
     const insertMatch = sql.match(/INSERT INTO (\w+)/i);
     if (insertMatch) {
       const table = insertMatch[1].toLowerCase();
-      if (this.data[table]) {
-        const idField = this.getIdField(table);
-        const id = this.idCounters[table]++;
-        const newRecord = { [idField]: id, ...this.parseInsertParams(sql, params) };
-        this.data[table].push(newRecord);
+      if (storage[table]) {
+        const idField = getIdField(table);
+        const id = idCounters[table]++;
+        const columnsMatch = sql.match(/\(([^)]+)\)\s*VALUES/i);
+        const newRecord = { [idField]: id };
+        if (columnsMatch) {
+          const columns = columnsMatch[1].split(',').map(c => c.trim().toLowerCase());
+          columns.forEach((col, i) => {
+            if (params[i] !== undefined) newRecord[col] = params[i];
+          });
+        }
+        storage[table].push(newRecord);
         return { lastID: id, changes: 1, [idField]: id };
       }
     }
@@ -65,54 +82,52 @@ class InMemoryDatabase {
     const deleteMatch = sql.match(/DELETE FROM (\w+)/i);
     if (deleteMatch) {
       const table = deleteMatch[1].toLowerCase();
-      if (this.data[table]) {
+      if (storage[table]) {
         const whereMatch = sql.match(/WHERE (\w+)\s*=\s*\$1/i);
         if (whereMatch && params.length > 0) {
           const field = whereMatch[1].toLowerCase();
-          const initialLength = this.data[table].length;
-          this.data[table] = this.data[table].filter(item => item[field] != params[0]);
-          return { changes: initialLength - this.data[table].length };
+          const before = storage[table].length;
+          storage[table] = storage[table].filter(item => item[field] != params[0]);
+          return { changes: before - storage[table].length };
         }
       }
     }
     
     return { lastID: null, changes: 0 };
-  }
+  },
 
   async get(sql, params = []) {
     const selectMatch = sql.match(/SELECT .* FROM (\w+)/i);
     if (selectMatch) {
       const table = selectMatch[1].toLowerCase();
-      if (this.data[table]) {
+      if (storage[table]) {
         const whereMatch = sql.match(/WHERE (\w+)\s*=\s*\$1/i);
         if (whereMatch && params.length > 0) {
           const field = whereMatch[1].toLowerCase();
-          return this.data[table].find(item => item[field] == params[0]) || null;
+          return storage[table].find(item => item[field] == params[0]) || null;
         }
-        return this.data[table][0] || null;
+        return storage[table][0] || null;
       }
     }
     if (sql.includes('COUNT(*)')) {
       return { count: '0' };
     }
     return null;
-  }
+  },
 
   async all(sql, params = []) {
     const selectMatch = sql.match(/SELECT .* FROM (\w+)/i);
     if (selectMatch) {
       const table = selectMatch[1].toLowerCase();
-      if (this.data[table]) {
-        let results = [...this.data[table]];
+      if (storage[table]) {
+        let results = [...storage[table]];
         
-        // Handle WHERE clause
         const whereMatch = sql.match(/WHERE (\w+)\s*=\s*\$1/i);
         if (whereMatch && params.length > 0) {
           const field = whereMatch[1].toLowerCase();
           results = results.filter(item => item[field] == params[0]);
         }
         
-        // Handle LIMIT
         const limitMatch = sql.match(/LIMIT\s+(\d+)/i);
         if (limitMatch) {
           results = results.slice(0, parseInt(limitMatch[1]));
@@ -122,54 +137,11 @@ class InMemoryDatabase {
       }
     }
     return [];
-  }
+  },
 
   async exec(sql) {
     return Promise.resolve();
-  }
+  },
+};
 
-  async close() {
-    console.log('In-memory database closed');
-    return Promise.resolve();
-  }
-
-  getIdField(table) {
-    const idFields = {
-      users: 'user_id',
-      pets: 'pet_id',
-      appointments: 'appointment_id',
-      businesses: 'business_id',
-      medical_records: 'record_id',
-      emergencies: 'emergency_id',
-    };
-    return idFields[table] || 'id';
-  }
-
-  parseInsertParams(sql, params) {
-    const columnsMatch = sql.match(/\(([^)]+)\)\s*VALUES/i);
-    if (columnsMatch) {
-      const columns = columnsMatch[1].split(',').map(c => c.trim().toLowerCase());
-      const result = {};
-      columns.forEach((col, index) => {
-        if (params[index] !== undefined) {
-          result[col] = params[index];
-        }
-      });
-      return result;
-    }
-    return {};
-  }
-}
-
-// Check environment to decide which database to use
-function shouldUsePostgres() {
-  const host = process.env.DB_HOST;
-  const password = process.env.DB_PASSWORD;
-  // Only use PostgreSQL if we have a valid host (not 'db' from Docker) and password
-  return host && host !== 'db' && host !== 'localhost' && password;
-}
-
-// Export database instance - always use in-memory for v0 sandbox
-const database = new InMemoryDatabase();
-
-module.exports = database;
+module.exports = db;
