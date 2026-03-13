@@ -3,35 +3,160 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>MedellinVet</title>
+  <title>VetCare - Professional Pet Healthcare</title>
+  <meta name="description" content="Connect with the best veterinary clinics and specialists. Your pet deserves exceptional care.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#cdb4db">
   <link rel="icon" href="./frontend/assets/icons/favicon.svg" type="image/svg+xml">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            lavender: '#cdb4db',
-            softpink: '#ffc8dd',
-            pink: '#ffafcc',
-            lightblue: '#bde0fe',
-            blue: '#a2d2ff',
-            green: '#C8E6C9',
-            white: '#ffffff',
-            gray: '#6b7280',
-          }
+            lavender: {
+              DEFAULT: '#cdb4db',
+              light: '#e8dff0',
+              dark: '#a58ab8',
+            },
+            softpink: {
+              DEFAULT: '#ffc8dd',
+              light: '#ffe4ed',
+              dark: '#ff9ec4',
+            },
+            pink: {
+              DEFAULT: '#ffafcc',
+              light: '#ffd4e5',
+              dark: '#ff7eb3',
+            },
+            lightblue: {
+              DEFAULT: '#bde0fe',
+              light: '#e0f0ff',
+              dark: '#8bc7f7',
+            },
+            blue: {
+              DEFAULT: '#a2d2ff',
+              light: '#d0e9ff',
+              dark: '#6bb3f5',
+            },
+            green: {
+              DEFAULT: '#C8E6C9',
+              light: '#e8f5e9',
+              dark: '#a5d6a7',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'fade-in-up': 'fadeInUp 0.5s ease-out',
+            'fade-in-down': 'fadeInDown 0.5s ease-out',
+            'slide-up': 'slideUp 0.4s ease-out',
+            'scale-in': 'scaleIn 0.3s ease-out',
+            'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeInDown: {
+              '0%': { opacity: '0', transform: 'translateY(-20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(100%)' },
+              '100%': { transform: 'translateY(0)' },
+            },
+            scaleIn: {
+              '0%': { opacity: '0', transform: 'scale(0.9)' },
+              '100%': { opacity: '1', transform: 'scale(1)' },
+            },
+            bounceGentle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-5px)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.7' },
+            },
+          },
+          boxShadow: {
+            'glow-lavender': '0 8px 24px rgba(205, 180, 219, 0.4)',
+            'glow-pink': '0 8px 24px rgba(255, 200, 221, 0.4)',
+            'glow-blue': '0 8px 24px rgba(189, 224, 254, 0.4)',
+            'card': '0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04)',
+            'card-hover': '0 20px 40px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06)',
+          },
         }
       }
     }
   </script>
+  
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="./frontend/css/design-system.css">
   <link rel="stylesheet" href="./frontend/css/task-manager.css">
   <link rel="stylesheet" href="./frontend/css/landing.css">
+  
+  <!-- Dark mode initialization -->
+  <script>
+    // Check for saved theme preference or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
+    }
+  </script>
 </head>
 
-<body id="app" class="min-h-screen bg-gradient-to-br from-purple/20 to-blue/20 flex items-center justify-center">
-
+<body id="app" class="min-h-screen bg-gradient-to-br from-lavender-light/30 via-white to-softpink-light/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
+  
+  <!-- Loading screen -->
+  <div id="loading-screen" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-[9999] transition-opacity duration-500">
+    <div class="text-center">
+      <div class="w-16 h-16 mx-auto mb-4 relative">
+        <div class="absolute inset-0 rounded-full border-4 border-lavender-light animate-ping"></div>
+        <div class="absolute inset-2 rounded-full border-4 border-t-lavender border-r-softpink border-b-lightblue border-l-pink animate-spin"></div>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 animate-pulse">Loading VetCare...</p>
+    </div>
+  </div>
+  
   <script type="module" src="./frontend/src/main.js"></script>
+  
+  <!-- Remove loading screen after content loads -->
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+          loadingScreen.style.opacity = '0';
+          setTimeout(() => loadingScreen.remove(), 500);
+        }
+      }, 300);
+    });
+  </script>
 </body>
 
 </html>
