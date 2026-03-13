@@ -107,8 +107,9 @@ class InMemoryDatabase {
 let database;
 
 const DB_HOST = process.env.DB_HOST;
+const usePostgres = DB_HOST && DB_HOST !== 'db' && DB_HOST !== 'localhost' && process.env.DB_PASSWORD;
 
-if (DB_HOST && DB_HOST !== 'db') {
+if (usePostgres) {
   // PostgreSQL is configured
   const { Pool } = require('pg');
   
