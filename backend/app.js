@@ -6,7 +6,7 @@ const db = require('./db');
 const { errorHandler, notFound } = require('./middleware');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = parseInt(process.env.PORT, 10) || 3000;
 
 // ── Middlewares básicos ──────────────────────────────────────────────────────
 app.use(cors());
@@ -51,9 +51,10 @@ async function startServer(port = PORT) {
     
     server.on('error', (err) => {
       if (err.code === 'EADDRINUSE') {
-        console.log(`Port ${port} is in use, trying ${port + 1}...`);
+        const nextPort = Number(port) + 1;
+        console.log(`Port ${port} is in use, trying ${nextPort}...`);
         server.close();
-        startServer(port + 1);
+        startServer(nextPort);
       } else {
         console.error('Server error:', err);
         process.exit(1);
