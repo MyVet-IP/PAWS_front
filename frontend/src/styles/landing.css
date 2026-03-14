@@ -1,6 +1,6 @@
-/* Landing Page Styles /
+/* Landing Page Styles */
 
-/ Hero section /
+/* Hero section */
 .hero-section {
   position: relative;
   overflow: hidden;
@@ -14,7 +14,7 @@
   animation: fadeIn 0.8s ease-out 0.2s backwards;
 }
 
-/ Decorative elements /
+/* Decorative elements */
 .hero-decoration {
   position: absolute;
   border-radius: 50%;
@@ -30,21 +30,28 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
 }
 
-/ Feature cards /
+/* Feature cards */
 .feature-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(0,0,0,0.12);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
 }
 
-/ Stats counter animation /
+/* Stats counter animation */
 .stat-number {
   transition: transform 0.3s ease;
 }
@@ -53,7 +60,7 @@
   transform: scale(1.05);
 }
 
-/ CTA section /
+/* CTA section */
 .cta-section {
   position: relative;
   overflow: hidden;
@@ -66,21 +73,21 @@
   right: -20%;
   width: 400px;
   height: 400px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 50%;
 }
 
-/ Clinic preview cards /
+/* Clinic preview cards */
 .clinic-preview-card {
   transition: all 0.25s ease;
 }
 
 .clinic-preview-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
-/ Dark Mode */
+/* Dark Mode */
 .dark .hero-section {
   background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
 }

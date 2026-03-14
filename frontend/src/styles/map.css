@@ -1,12 +1,12 @@
-/* Map Page Styles /
+/* Map Page Styles */
 
-/ Map container /
+/* Map container */
 .map-container {
   position: relative;
   transition: opacity 0.3s ease;
 }
 
-/ Sidebar clinic cards /
+/* Sidebar clinic cards */
 .map-clinic-card {
   transition: all 0.2s ease;
   border-radius: 16px;
@@ -14,7 +14,7 @@
 
 .map-clinic-card:hover {
   background: #F9FAFB;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .map-clinic-card.active {
@@ -22,7 +22,7 @@
   border-color: #6A4C93;
 }
 
-/ Filter buttons /
+/* Filter buttons */
 .map-filter-btn {
   transition: all 0.15s ease;
 }
@@ -34,7 +34,7 @@
   border-color: #F1C0E8;
 }
 
-/ Search input /
+/* Search input */
 .map-search-input {
   transition: all 0.2s ease;
 }
@@ -44,7 +44,7 @@
   box-shadow: 0 0 0 3px rgba(106, 76, 147, 0.1);
 }
 
-/ Google Maps info window custom styles /
+/* Google Maps info window custom styles */
 .gm-style-iw {
   border-radius: 12px !important;
   padding: 8px !important;
@@ -54,7 +54,7 @@
   overflow: hidden !important;
 }
 
-/ Dark Mode */
+/* Dark Mode */
 .dark .map-sidebar {
   background: #1F2937;
   border-color: #374151;
@@ -79,83 +79,4 @@
   background: #374151;
   border-color: #4B5563;
   color: #F9FAFB;
-}
-dashboard.css
-/* Dashboard View Styles /
-
-/ Sidebar navigation /
-.dashboard-sidebar {
-  transition: width 0.3s ease;
-}
-
-.sidebar-nav-item {
-  transition: all 0.2s ease;
-  border-radius: 12px;
-}
-
-.sidebar-nav-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.sidebar-nav-item.active {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/ Stat cards /
-.stat-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-}
-
-/ Pet cards /
-.pet-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.pet-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
-}
-
-/ Modal animations /
-.modal-overlay {
-  animation: fadeIn 0.2s ease-out;
-}
-
-.modal-content {
-  animation: scaleIn 0.3s ease-out;
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/ Dark Mode */
-.dark .dashboard-sidebar {
-  background: linear-gradient(180deg, #374151 0%, #1F2937 100%);
-}
-
-.dark .stat-card {
-  background: #374151;
-  border-color: #4B5563;
-}
-
-.dark .pet-card {
-  background: #374151;
-  border-color: #4B5563;
-}
-
-.dark .modal-content {
-  background: #374151;
 }

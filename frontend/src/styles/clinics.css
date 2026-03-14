@@ -1,16 +1,16 @@
-/* Clinics View Styles /
+/* Clinics View Styles */
 
-/ Clinic cards /
+/* Clinic cards */
 .clinic-card {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .clinic-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
 }
 
-/ Filter chips /
+/* Filter chips */
 .filter-chip {
   transition: all 0.15s ease;
 }
@@ -22,7 +22,7 @@
   color: white;
 }
 
-/ Service tags /
+/* Service tags */
 .service-tag {
   transition: background 0.2s ease;
 }
@@ -31,7 +31,7 @@
   background: rgba(106, 76, 147, 0.15);
 }
 
-/ Rating stars animation /
+/* Rating stars animation */
 .star-rating {
   transition: transform 0.2s ease;
 }
@@ -40,13 +40,13 @@
   transform: scale(1.1);
 }
 
-/ Search input /
+/* Search input */
 .search-input:focus {
   border-color: #6A4C93;
   box-shadow: 0 0 0 3px rgba(106, 76, 147, 0.1);
 }
 
-/ Dark Mode */
+/* Dark Mode */
 .dark .clinic-card {
   background: #374151;
   border-color: #4B5563;

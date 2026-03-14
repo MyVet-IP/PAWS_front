@@ -1,5 +1,4 @@
 import { navbarController, navbarEvents } from "../components/navbar.js";
-import { navbarController, navbarEvents } from "../components/navbar.js";
 import { Aside } from "../components/aside.js";
 import { Topbar } from "../components/topbar.js";
 import { getUser } from "../utils.js";
@@ -15,7 +14,7 @@ export function Layout(content) {
   // if this is guest
   if (role === "guest") {
 
-        const html = `
+    const html = `
           ${navbarController()}
 
           <main class="min-h-screen">
@@ -24,7 +23,7 @@ export function Layout(content) {
           ${Footer()}
         `;
 
-        setTimeout(navbarEvents, 0);
+    setTimeout(navbarEvents, 0);
 
     return html;
   }
@@ -48,4 +47,4 @@ export function Layout(content) {
         </div>
 
       `;
-    }
+}
