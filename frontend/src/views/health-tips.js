@@ -2,323 +2,168 @@ export function healthTipsPage() {
   const tips = [
     {
       category: 'Nutrition',
-      color: '#B9FBC0',
+      color: 'pawsGreen',
       icon: '🥦',
-      accent: '#6A4C93',
       title: 'Balanced Diet for Your Pet',
       description: 'A proper diet is the foundation of your pet\'s health. Make sure to provide age-appropriate food with the right balance of proteins, carbohydrates, and fats.',
       tips: ['Choose food appropriate for your pet\'s life stage', 'Avoid giving human food — many are toxic to pets', 'Always keep fresh water available', 'Measure portions to prevent obesity']
     },
     {
       category: 'Exercise',
-      color: '#90BDF4',
+      color: 'pawsBlue',
       icon: '🏃',
-      accent: '#2563eb',
       title: 'Keep Them Active & Happy',
       description: 'Regular physical activity prevents obesity, strengthens muscles, and improves your pet\'s mental wellbeing. Each species has different needs.',
       tips: ['Dogs need at least 30 min of exercise daily', 'Cats benefit from interactive toys and climbing structures', 'Avoid intense exercise in extreme heat', 'Introduce new activities gradually']
     },
     {
       category: 'Preventive Care',
-      color: '#F1C0E8',
+      color: 'pawsPurple',
       icon: '💉',
-      accent: '#6A4C93',
       title: 'Vaccines & Deworming',
       description: 'Prevention is always better than cure. Keeping your pet\'s vaccination schedule up to date protects them and the whole family.',
       tips: ['Schedule annual vaccine boosters', 'Deworm every 3 months for dogs and cats', 'Use flea and tick prevention year-round', 'Keep a health record for your pet']
     },
     {
       category: 'Dental Health',
-      color: '#FBF8CC',
+      color: 'pawsYellow',
       icon: '🦷',
-      accent: '#d97706',
       title: 'Don\'t Ignore Their Teeth',
       description: 'Dental disease affects over 80% of pets by age 3. Good oral hygiene prevents pain, infections, and even heart disease.',
-      tips: ['Brush teeth 2–3 times per week', 'Offer dental chews approved by vets', 'Schedule annual dental cleanings', 'Watch for bad breath — it\'s a warning sign']
+      tips: ['Brush teeth 2-3 times per week', 'Offer dental chews approved by vets', 'Schedule annual dental cleanings', 'Watch for bad breath — it\'s a warning sign']
     },
     {
       category: 'Mental Wellbeing',
-      color: '#FFCFD2',
+      color: 'pawsPink',
       icon: '🧠',
-      accent: '#dc2626',
       title: 'Emotional Health Matters Too',
       description: 'Pets experience stress, anxiety, and boredom. A stimulating environment and quality time with you are essential for their emotional balance.',
       tips: ['Provide enrichment toys and puzzles', 'Maintain consistent daily routines', 'Socialize puppies and kittens early', 'Never punish — use positive reinforcement']
     },
     {
       category: 'Grooming',
-      color: '#B9FBC0',
+      color: 'pawsGreen',
       icon: '✂️',
-      accent: '#059669',
       title: 'Grooming is Health Care',
       description: 'Regular grooming does more than keep your pet looking great. It helps you detect lumps, skin issues, or parasites before they become serious.',
-      tips: ['Brush coat weekly to prevent matting', 'Trim nails every 3–4 weeks', 'Clean ears monthly to prevent infections', 'Check skin for unusual lumps or redness']
+      tips: ['Brush coat weekly to prevent matting', 'Trim nails every 3-4 weeks', 'Clean ears monthly to prevent infections', 'Check skin for unusual lumps or redness']
     }
   ];
 
+  const colorMap = {
+    pawsGreen: { bg: 'bg-pawsGreen', text: 'text-green-800', darkText: 'dark:text-green-200' },
+    pawsBlue: { bg: 'bg-pawsBlue', text: 'text-blue-800', darkText: 'dark:text-blue-200' },
+    pawsPurple: { bg: 'bg-pawsPurple', text: 'text-purple-800', darkText: 'dark:text-purple-200' },
+    pawsYellow: { bg: 'bg-pawsYellow', text: 'text-yellow-800', darkText: 'dark:text-yellow-200' },
+    pawsPink: { bg: 'bg-pawsPink', text: 'text-pink-800', darkText: 'dark:text-pink-200' },
+  };
+
+  const seasonalTips = [
+    { season: 'Spring', icon: '🌸', tip: 'Watch for seasonal allergies and increase grooming frequency', color: 'pawsPink' },
+    { season: 'Summer', icon: '☀️', tip: 'Hydration is critical. Never leave pets in parked cars', color: 'pawsYellow' },
+    { season: 'Rainy Season', icon: '🌧️', tip: 'Check for fungal infections and keep paws dry after walks', color: 'pawsBlue' },
+    { season: 'Year-Round', icon: '🌿', tip: 'In Medellin\'s climate, mosquito prevention is always needed', color: 'pawsGreen' }
+  ];
+
   return `
-    <div class="min-h-screen" style="background: linear-gradient(160deg, #f8f6ff 0%, #fef9f9 50%, #f0fdf4 100%); font-family: 'Poppins', sans-serif;">
-
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-
-      <style>
-        .tips-hero-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          background: #F1C0E8;
-          color: #6A4C93;
-          font-size: 0.75rem;
-          font-weight: 600;
-          padding: 6px 14px;
-          border-radius: 999px;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          font-family: 'Poppins', sans-serif;
-        }
-        .tip-card {
-          background: white;
-          border-radius: 20px;
-          padding: 32px;
-          box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
-          border: 1px solid rgba(0,0,0,0.04);
-          position: relative;
-          overflow: hidden;
-        }
-        .tip-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 40px rgba(0,0,0,0.10);
-        }
-        .tip-card-accent {
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 4px;
-          border-radius: 20px 20px 0 0;
-        }
-        .tip-category-badge {
-          display: inline-block;
-          font-size: 0.7rem;
-          font-weight: 600;
-          padding: 4px 12px;
-          border-radius: 999px;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          font-family: 'Poppins', sans-serif;
-          margin-bottom: 12px;
-        }
-        .tip-list-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
-          padding: 8px 0;
-          font-family: 'Roboto', sans-serif;
-          font-size: 0.875rem;
-          color: #4A4A4A;
-          border-bottom: 1px solid #f5f5f5;
-        }
-        .tip-list-item:last-child { border-bottom: none; }
-        .tip-check {
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          margin-top: 1px;
-          font-size: 10px;
-        }
-        .seasonal-card {
-          background: white;
-          border-radius: 16px;
-          padding: 24px;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-          text-align: center;
-          transition: transform 0.2s ease;
-        }
-        .seasonal-card:hover { transform: translateY(-2px); }
-        .newsletter-section {
-          background: linear-gradient(135deg, #6A4C93 0%, #8b5cf6 100%);
-          border-radius: 24px;
-          padding: 48px;
-          text-align: center;
-          color: white;
-          position: relative;
-          overflow: hidden;
-        }
-        .newsletter-section::before {
-          content: '';
-          position: absolute;
-          top: -40px; right: -40px;
-          width: 200px; height: 200px;
-          background: rgba(255,255,255,0.06);
-          border-radius: 50%;
-        }
-        .newsletter-input {
-          flex: 1;
-          padding: 14px 20px;
-          border: none;
-          border-radius: 12px;
-          font-family: 'Roboto', sans-serif;
-          font-size: 0.9rem;
-          outline: none;
-          color: #333;
-        }
-        .newsletter-btn {
-          padding: 14px 28px;
-          background: #B9FBC0;
-          color: #333;
-          border: none;
-          border-radius: 12px;
-          font-family: 'Poppins', sans-serif;
-          font-weight: 600;
-          font-size: 0.875rem;
-          cursor: pointer;
-          transition: background 0.2s;
-          white-space: nowrap;
-        }
-        .newsletter-btn:hover { background: #9ef0a7; }
-        .filter-pill {
-          padding: 8px 20px;
-          border-radius: 999px;
-          border: 1.5px solid #e5e7eb;
-          background: white;
-          font-family: 'Poppins', sans-serif;
-          font-size: 0.8rem;
-          font-weight: 500;
-          color: #6b7280;
-          cursor: pointer;
-          transition: all 0.15s;
-        }
-        .filter-pill:hover, .filter-pill.active {
-          background: #6A4C93;
-          border-color: #6A4C93;
-          color: white;
-        }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .fade-up { animation: fadeUp 0.5s ease forwards; }
-      </style>
-
-      <!-- Header -->
-      <header class="bg-white shadow-sm border-b" style="border-color: #f0e8ff;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="tips-hero-badge mb-2">🐾 Expert Advice</div>
-              <h1 class="text-3xl font-bold" style="color: #333333; font-family: 'Poppins', sans-serif;">Health Tips</h1>
-              <p class="mt-1" style="color: #4A4A4A; font-family: 'Roboto', sans-serif; font-size: 0.95rem;">Evidence-based advice to keep your furry friends thriving</p>
-            </div>
-            <button onclick="window.location.hash='#/'" class="font-medium hover:opacity-75 transition" style="color: #6A4C93; font-family: 'Poppins', sans-serif;">
-              ← Back to home
-            </button>
-          </div>
-        </div>
-      </header>
+    <div class="p-6 lg:p-8">
 
       <!-- Filter Bar -->
-      <section class="bg-white border-b" style="border-color: #f5f5f5;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div class="flex gap-3 flex-wrap items-center">
-            <span style="font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">Filter by:</span>
-            <button class="filter-pill active" data-filter="all" onclick="filterTips(this, 'all')">All Topics</button>
-            <button class="filter-pill" data-filter="Nutrition" onclick="filterTips(this, 'Nutrition')">🥦 Nutrition</button>
-            <button class="filter-pill" data-filter="Exercise" onclick="filterTips(this, 'Exercise')">🏃 Exercise</button>
-            <button class="filter-pill" data-filter="Preventive Care" onclick="filterTips(this, 'Preventive Care')">💉 Prevention</button>
-            <button class="filter-pill" data-filter="Dental Health" onclick="filterTips(this, 'Dental Health')">🦷 Dental</button>
-            <button class="filter-pill" data-filter="Mental Wellbeing" onclick="filterTips(this, 'Mental Wellbeing')">🧠 Mental Health</button>
-            <button class="filter-pill" data-filter="Grooming" onclick="filterTips(this, 'Grooming')">✂️ Grooming</button>
-          </div>
-        </div>
-      </section>
+      <div class="flex flex-wrap gap-2 mb-8">
+        <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide py-2">Filter:</span>
+        <button class="filter-pill active px-4 py-2 rounded-full text-sm font-medium bg-primary text-white border-2 border-primary transition-all" data-filter="all">
+          All Topics
+        </button>
+        ${['Nutrition', 'Exercise', 'Preventive Care', 'Dental Health', 'Mental Wellbeing', 'Grooming'].map(cat => `
+          <button class="filter-pill px-4 py-2 rounded-full text-sm font-medium bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-2 border-gray-200 dark:border-gray-600 hover:border-primary hover:text-primary dark:hover:border-purple-400 dark:hover:text-purple-400 transition-all" data-filter="${cat}">
+            ${cat}
+          </button>
+        `).join('')}
+      </div>
 
-      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-        <!-- Tips Grid -->
-        <div id="tips-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          ${tips.map((tip, i) => `
-            <div class="tip-card fade-up" data-category="${tip.category}" style="animation-delay: ${i * 0.08}s;">
-              <div class="tip-card-accent" style="background: ${tip.color};"></div>
-              <div class="tip-category-badge" style="background: ${tip.color}; color: ${tip.accent};">
-                ${tip.icon} ${tip.category}
+      <!-- Tips Grid -->
+      <div id="tips-grid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+        ${tips.map((tip, i) => {
+          const colors = colorMap[tip.color];
+          return `
+            <div class="tip-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-gray-100 dark:border-gray-700 relative overflow-hidden" data-category="${tip.category}" style="animation-delay: ${i * 0.08}s;">
+              <!-- Accent Bar -->
+              <div class="absolute top-0 left-0 right-0 h-1 ${colors.bg}"></div>
+              
+              <!-- Category Badge -->
+              <div class="inline-flex items-center gap-1.5 ${colors.bg} ${colors.text} text-xs font-semibold px-3 py-1 rounded-full mb-4">
+                <span>${tip.icon}</span>
+                <span>${tip.category}</span>
               </div>
-              <h3 class="text-lg font-bold mb-3" style="color: #333333; font-family: 'Poppins', sans-serif;">${tip.title}</h3>
-              <p class="mb-5" style="color: #4A4A4A; font-family: 'Roboto', sans-serif; font-size: 0.875rem; line-height: 1.6;">${tip.description}</p>
-              <div>
+              
+              <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 font-title">${tip.title}</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">${tip.description}</p>
+              
+              <!-- Tips List -->
+              <div class="space-y-2">
                 ${tip.tips.map(t => `
-                  <div class="tip-list-item">
-                    <div class="tip-check" style="background: ${tip.color}; color: ${tip.accent};">✓</div>
-                    <span>${t}</span>
+                  <div class="flex items-start gap-2 text-sm">
+                    <span class="w-5 h-5 ${colors.bg} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-xs">✓</span>
+                    <span class="text-gray-600 dark:text-gray-400">${t}</span>
                   </div>
                 `).join('')}
               </div>
             </div>
-          `).join('')}
+          `;
+        }).join('')}
+      </div>
+
+      <!-- Seasonal Section -->
+      <section class="mb-12">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2 font-title">Seasonal Care Guide</h2>
+          <p class="text-gray-500 dark:text-gray-400">Tips tailored to Medellin's climate</p>
         </div>
-
-        <!-- Seasonal Section -->
-        <section class="mb-16">
-          <div class="text-center mb-8">
-            <h2 class="text-2xl font-bold mb-2" style="color: #333333; font-family: 'Poppins', sans-serif;">Seasonal Care Guide</h2>
-            <p style="color: #4A4A4A; font-family: 'Roboto', sans-serif; font-size: 0.9rem;">Tips that change with the year, tailored to Medellín's climate</p>
-          </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            ${[
-              { season: 'Spring', icon: '🌸', tip: 'Watch for seasonal allergies and increase grooming frequency', color: '#FFCFD2' },
-              { season: 'Summer', icon: '☀️', tip: 'Hydration is critical. Never leave pets in parked cars', color: '#FBF8CC' },
-              { season: 'Rainy Season', icon: '🌧️', tip: 'Check for fungal infections and keep paws dry after walks', color: '#90BDF4' },
-              { season: 'Year-Round', icon: '🌿', tip: 'In Medellín\'s climate, mosquito prevention is always needed', color: '#B9FBC0' }
-            ].map(s => `
-              <div class="seasonal-card">
-                <div class="text-3xl mb-3">${s.icon}</div>
-                <div class="font-semibold mb-2" style="color: #333; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">${s.season}</div>
-                <p style="color: #4A4A4A; font-family: 'Roboto', sans-serif; font-size: 0.8rem; line-height: 1.5;">${s.tip}</p>
-                <div style="height: 3px; background: ${s.color}; border-radius: 99px; margin-top: 16px;"></div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          ${seasonalTips.map(s => {
+            const colors = colorMap[s.color];
+            return `
+              <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 text-center">
+                <div class="text-4xl mb-3">${s.icon}</div>
+                <div class="font-semibold text-gray-800 dark:text-white mb-2 text-sm">${s.season}</div>
+                <p class="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">${s.tip}</p>
+                <div class="h-1 ${colors.bg} rounded-full mt-4"></div>
               </div>
-            `).join('')}
-          </div>
-        </section>
+            `;
+          }).join('')}
+        </div>
+      </section>
 
-        <!-- Newsletter -->
-        <section class="newsletter-section mb-12">
-          <h2 class="text-2xl font-bold mb-2" style="font-family: 'Poppins', sans-serif;">Get Weekly Health Tips</h2>
-          <p style="font-family: 'Roboto', sans-serif; opacity: 0.85; margin-bottom: 28px; font-size: 0.95rem;">Join 500+ pet owners in Medellín who receive expert advice every week.</p>
-          <div class="flex gap-3 max-w-md mx-auto">
-            <input type="email" placeholder="your@email.com" class="newsletter-input" id="newsletter-email">
-            <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe</button>
+      <!-- Newsletter Section -->
+      <section class="bg-gradient-to-r from-primary to-purple-600 rounded-2xl p-8 text-center text-white relative overflow-hidden">
+        <!-- Decorative -->
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full"></div>
+        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full"></div>
+        
+        <div class="relative z-10">
+          <h2 class="text-2xl font-bold mb-2 font-title">Get Weekly Health Tips</h2>
+          <p class="opacity-90 mb-6">Join 500+ pet owners in Medellin who receive expert advice every week.</p>
+          
+          <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input 
+              type="email" 
+              placeholder="your@email.com" 
+              id="newsletter-email"
+              class="flex-1 px-4 py-3 rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/50"
+            >
+            <button 
+              id="newsletter-btn"
+              class="bg-pawsGreen hover:bg-green-200 text-gray-800 px-6 py-3 rounded-xl font-semibold transition-colors whitespace-nowrap"
+            >
+              Subscribe
+            </button>
           </div>
-          <p style="font-family: 'Roboto', sans-serif; font-size: 0.75rem; opacity: 0.6; margin-top: 12px;">No spam, ever. Unsubscribe anytime.</p>
-        </section>
+          
+          <p class="text-xs opacity-70 mt-4">No spam, ever. Unsubscribe anytime.</p>
+        </div>
+      </section>
 
-      </main>
     </div>
-
-    <script>
-      function filterTips(btn, category) {
-        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.tip-card').forEach(card => {
-          if (category === 'all' || card.dataset.category === category) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      }
-
-      function subscribeNewsletter() {
-        const email = document.getElementById('newsletter-email').value;
-        if (!email || !email.includes('@')) {
-          alert('Please enter a valid email address.');
-          return;
-        }
-        alert('Thanks for subscribing! Check your inbox soon 🐾');
-        document.getElementById('newsletter-email').value = '';
-      }
-    </script>
   `;
 }
 

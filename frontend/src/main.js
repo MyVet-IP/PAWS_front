@@ -1,13 +1,28 @@
 import { router } from "./router/router.js";
 import { navbarController } from "./components/navbar.js";
-import { apiService } from "../../backend/services/api.js";
-import { showToast, showLoading, hideLoading } from "./utils.js";
+import { initTopbarEvents } from "./components/topbar.js";
+import { 
+  showToast, 
+  showLoading, 
+  hideLoading, 
+  initTheme, 
+  toggleTheme, 
+  getTheme, 
+  setTheme 
+} from "./utils.js";
 
-// Funciones globales para usar en HTML
+// Expose theme utilities globally for components
+window.pawsUtils = {
+  toggleTheme,
+  getTheme,
+  setTheme,
+  showToast
+};
+
+// Global functions for HTML
 window.viewClinicDetails = function (clinicId) {
-  showToast(`Viendo detalles de la clínica ${clinicId}`, 'info');
-  // Aquí podrías navegar a una vista de detalle
-  console.log('Ver detalles de clínica:', clinicId);
+  showToast(`Viewing clinic ${clinicId}`, 'info');
+  console.log('View clinic details:', clinicId);
 };
 
 window.bookAppointment = function (clinicId) {
@@ -30,18 +45,33 @@ window.searchClinics = function () {
   }
 };
 
-// Inicializar aplicación
+// Initialize application
 function initApp() {
-  console.log('VetCare App iniciada');
+  console.log('MedellinVet App initialized');
 
-  // Cargar router
+  // Initialize theme
+  initTheme();
+
+  // Load router
   router();
 
-  // Inicializar controladores
+  // Initialize controllers
   navbarController;
+}
+
+// After route change, reinitialize topbar events
+function onRouteChange() {
+  router();
+  // Small delay to ensure DOM is ready
+  requestAnimationFrame(() => {
+    initTopbarEvents();
+  });
 }
 
 // Event listeners
 window.addEventListener("DOMContentLoaded", initApp);
-window.addEventListener("load", router);
-window.addEventListener("hashchange", router);
+window.addEventListener("load", () => {
+  router();
+  initTopbarEvents();
+});
+window.addEventListener("hashchange", onRouteChange);

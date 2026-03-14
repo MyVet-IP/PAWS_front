@@ -1,274 +1,191 @@
 // frontend/src/views/vet-dashboard.js
 
 export function vetDashboardPage() {
+  const schedule = [
+    { day: 'Monday', hours: '09:00 - 20:00' },
+    { day: 'Tuesday', hours: '10:00 - 18:00' },
+    { day: 'Wednesday', hours: '10:00 - 18:00' },
+    { day: 'Thursday', hours: '10:00 - 18:00' },
+    { day: 'Friday', hours: '10:00 - 18:00' },
+    { day: 'Saturday', hours: '10:00 - 14:00' },
+    { day: 'Sunday', hours: 'Closed' },
+  ];
+
+  const services = [
+    { icon: '💉', name: 'Vaccination' },
+    { icon: '🩺', name: 'Consultation' },
+    { icon: '🩻', name: 'X-Ray' },
+    { icon: '🔬', name: 'Laboratory' },
+    { icon: '🏥', name: 'Surgery' },
+    { icon: '🧴', name: 'Deworming' },
+  ];
+
+  const team = [
+    { name: 'Dr. Carlos Cardona', role: 'Lead Veterinarian', image: 'https://randomuser.me/api/portraits/men/32.jpg' },
+    { name: 'Dr. Ana Ruiz', role: 'Veterinary Surgeon', image: 'https://randomuser.me/api/portraits/women/44.jpg' },
+  ];
+
+  const stats = [
+    { icon: '🐕', label: 'Patients Today', value: '12', bg: 'bg-pawsGreen' },
+    { icon: '📅', label: 'Appointments', value: '8', bg: 'bg-pawsBlue' },
+    { icon: '⭐', label: 'Rating', value: '4.9', bg: 'bg-pawsYellow' },
+  ];
+
   return `
-  <section class="flex min-h-screen bg-gray-100">
-
-    <!-- SIDEBAR -->
-    <aside class="w-64 bg-white shadow-sm px-6 py-8 flex flex-col justify-between">
-
-      <div>
-        <div class="flex items-center gap-3 mb-10">
-          <div class="w-10 h-10 rounded-xl bg-lavender flex items-center justify-center text-white font-bold">
-            🐾
+    <div class="p-6 lg:p-8">
+      
+      <!-- Stats Row -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        ${stats.map(stat => `
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm flex items-center gap-4 transition-all duration-200 hover:shadow-md">
+            <div class="${stat.bg} w-12 h-12 rounded-xl flex items-center justify-center text-2xl">
+              ${stat.icon}
+            </div>
+            <div>
+              <p class="text-sm text-gray-500 dark:text-gray-400">${stat.label}</p>
+              <h3 class="text-2xl font-bold text-gray-800 dark:text-white font-title">${stat.value}</h3>
+            </div>
           </div>
-          <h2 class="text-xl font-bold text-gray-800">
-            San Juan Pet
-          </h2>
-        </div>
-
-        <nav class="flex flex-col gap-3 text-gray-600">
-
-          <a class="flex items-center gap-3 p-3 rounded-xl bg-lavender/20 text-gray-800 font-medium">
-            📊 Dashboard
-          </a>
-
-          <a class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100">
-            🐶 Pacientes
-          </a>
-
-          <a class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100">
-            📅 Citas
-          </a>
-
-          <a class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100">
-            🏥 Mi Clínica
-          </a>
-
-          <a class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100">
-            ⚙️ Configuración
-          </a>
-
-        </nav>
+        `).join('')}
       </div>
 
-      <button class="bg-lavender text-white py-3 rounded-xl font-semibold shadow hover:scale-105 transition">
-        Cerrar Sesión
-      </button>
+      <div class="flex flex-col lg:flex-row gap-6">
+        
+        <!-- Main Content -->
+        <div class="flex-1 space-y-6">
+          
+          <!-- Clinic Banner -->
+          <div class="relative rounded-2xl overflow-hidden shadow-sm h-48">
+            <img 
+              src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800&q=80"
+              alt="Clinic Banner"
+              class="w-full h-full object-cover"
+              crossorigin="anonymous"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex items-center justify-between px-8">
+              <div>
+                <h1 class="text-3xl font-bold text-white font-title">San Juan Pet Clinic</h1>
+                <p class="text-white/80 text-sm mt-1">Medellin, Colombia</p>
+              </div>
+              <button class="bg-white text-gray-800 px-6 py-2.5 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                Edit Profile
+              </button>
+            </div>
+          </div>
 
-    </aside>
+          <!-- About Section -->
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm transition-colors duration-200">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-3 font-title">
+              About Our Clinic
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+              At San Juan Pet Clinic, we provide comprehensive care for pets using modern technology, 
+              specialized staff, and a patient-centered approach to animal welfare. Our commitment is to 
+              offer accurate diagnoses and personalized service for every patient that walks through our doors.
+            </p>
+          </div>
 
-    <!-- MAIN -->
-    <main class="flex-1 p-8 flex gap-8">
+          <!-- Services Grid -->
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm transition-colors duration-200">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-6 font-title">
+              Our Services
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              ${services.map(service => `
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:shadow-md hover:-translate-y-1 transition-all duration-200 cursor-pointer">
+                  <div class="text-3xl mb-2">${service.icon}</div>
+                  <p class="text-sm font-medium text-gray-700 dark:text-gray-200">${service.name}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
 
-      <!-- CENTER CONTENT -->
-      <div class="flex-1">
-
-        <!-- TOP BANNER -->
-        <div class="relative rounded-3xl overflow-hidden shadow-sm mb-8">
-          <img 
-            src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee"
-            class="w-full h-48 object-cover blur-[2px] brightness-90"
-          />
-
-          <div class="absolute inset-0 flex items-center justify-between px-8">
-            <h1 class="text-3xl font-bold text-white">
-              Mi Clínica
-            </h1>
-
-            <button class="bg-white text-gray-800 px-6 py-2 rounded-full font-semibold shadow">
-              Editar Información
+          <!-- Quick Actions -->
+          <div class="grid grid-cols-2 gap-4">
+            <button class="bg-pawsGreen hover:bg-green-200 text-gray-800 p-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all hover:shadow-md">
+              <span class="text-xl">➕</span>
+              New Appointment
+            </button>
+            <button class="bg-pawsPurple hover:bg-purple-200 text-gray-800 p-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all hover:shadow-md">
+              <span class="text-xl">📋</span>
+              Patient Records
             </button>
           </div>
+
         </div>
 
-        <!-- GENERAL INFO (FULL WIDTH) -->
-        <div class="bg-white p-8 rounded-3xl shadow-sm mb-8">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">
-            Información General
-        </h3>
+        <!-- Right Sidebar -->
+        <aside class="w-full lg:w-80 space-y-6">
 
-        <p class="text-gray-600 leading-relaxed max-w-3xl">
-            En San Juan Pet brindamos atención integral para mascotas con tecnología
-            moderna, personal especializado y un enfoque centrado en el bienestar
-            animal. Nuestro compromiso es ofrecer diagnósticos precisos y un servicio
-            cercano para cada paciente.
-        </p>
-        </div>
-
-        <div class="bg-white p-8 rounded-3xl shadow-sm mb-8">
-            <!-- NUESTROS SERVICIOS (FULL WIDTH COMO INFORMACIÓN GENERAL) -->
-            <section class="bg-white rounded-3xl shadow-sm p-8 mb-8">
-
-            <!-- Título -->
-            <h3 class="text-xl font-bold text-gray-800 mb-6">
-                Nuestros Servicios
-            </h3>
-
-            <!-- Grid de servicios -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-                <!-- Servicio -->
-                <div class="bg-gray-50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:shadow-md transition">
-                <div class="text-4xl mb-3">💉</div>
-                <p class="text-sm font-semibold text-gray-700">Vacunación</p>
-                </div>
-
-                <!-- Servicio -->
-                <div class="bg-gray-50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:shadow-md transition">
-                <div class="text-4xl mb-3">🩺</div>
-                <p class="text-sm font-semibold text-gray-700">Consulta</p>
-                </div>
-
-                <!-- Servicio -->
-                <div class="bg-gray-50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:shadow-md transition">
-                <div class="text-4xl mb-3">🩻</div>
-                <p class="text-sm font-semibold text-gray-700">Rayos X</p>
-                </div>
-
-                <!-- Servicio -->
-                <div class="bg-gray-50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:shadow-md transition">
-                <div class="text-4xl mb-3">🔬</div>
-                <p class="text-sm font-semibold text-gray-700">Laboratorio</p>
-                </div>
-
-                <!-- Puedes agregar más -->
-                <div class="bg-gray-50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:shadow-md transition">
-                <div class="text-4xl mb-3">🏥</div>
-                <p class="text-sm font-semibold text-gray-700">Cirugía</p>
-                </div>
-
-                <div class="bg-gray-50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:shadow-md transition">
-                <div class="text-4xl mb-3">🧴</div>
-                <p class="text-sm font-semibold text-gray-700">Desparasitación</p>
-                </div>
-
+          <!-- Schedule Card -->
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm transition-colors duration-200">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-10 h-10 bg-pawsPurple/30 rounded-full flex items-center justify-center text-lg">
+                ⏰
+              </div>
+              <h3 class="text-lg font-bold text-gray-800 dark:text-white font-title">
+                Business Hours
+              </h3>
             </div>
-
-            </section>
-
-        </div>
-
-        <!-- LOWER CARDS -->
-        <div class="grid grid-cols-2 gap-6 mb-8">
-
-        <!-- INFO CARDS -->
-
-          <div class="bg-white p-6 rounded-2xl shadow-sm">
-            
+            <div class="space-y-3">
+              ${schedule.map(s => `
+                <div class="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
+                  <span class="text-gray-700 dark:text-gray-300 text-sm">${s.day}</span>
+                  <span class="text-sm font-medium ${s.hours === 'Closed' ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}">
+                    ${s.hours}
+                  </span>
+                </div>
+              `).join('')}
+            </div>
           </div>
 
-        </div>
+          <!-- Team Card -->
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm transition-colors duration-200">
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4 font-title">
+              Our Team
+            </h3>
+            <div class="space-y-4">
+              ${team.map(member => `
+                <div class="flex items-center gap-3">
+                  <img 
+                    src="${member.image}" 
+                    alt="${member.name}"
+                    class="w-12 h-12 rounded-full object-cover border-2 border-pawsGreen"
+                    crossorigin="anonymous"
+                  />
+                  <div>
+                    <span class="block text-gray-800 dark:text-white font-medium">${member.name}</span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400">${member.role}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <button class="w-full mt-4 py-2 text-sm text-primary dark:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+              + Add Team Member
+            </button>
+          </div>
+
+          <!-- Location Card -->
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm transition-colors duration-200">
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3 font-title">
+              Location
+            </h3>
+            <div class="bg-gray-100 dark:bg-gray-700 rounded-xl h-32 flex items-center justify-center mb-3">
+              <span class="text-gray-400 text-sm">Map placeholder</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              Calle 50 #45-32, El Poblado<br/>
+              Medellin, Antioquia
+            </p>
+          </div>
+
+        </aside>
 
       </div>
-
-      <!-- RIGHT PANEL -->
-      <aside class="w-80 flex flex-col gap-6">
-
-        <!-- STATS -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm">
-          <div class="bg-white rounded-3xl shadow-sm p-8 w-full max-w-md">
-
-        <!-- Header -->
-        <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-lavender/20 text-lavender rounded-full flex items-center justify-center text-lg">
-            ⏰
-            </div>
-            <h3 class="text-lg font-bold text-gray-800">
-            Horarios
-            </h3>
-        </div>
-
-        <!-- Schedule List -->
-        <div class="space-y-4 text-sm">
-
-            <div class="flex justify-between items-center">
-            <span class="text-gray-800">
-                Lunes
-            </span>
-            <span class="text-gray-400 font-medium">
-                09:00 - 20:00
-            </span>
-            </div>
-            <div class="flex justify-between items-center">
-            <span class="text-gray-800">
-                Martes
-            </span>
-            <span class="text-gray-400 font-medium">
-                10:00 - 14:00
-            </span>
-            </div>
-            <div class="flex justify-between items-center">
-            <span class="text-gray-800">
-                Miercoles
-            </span>
-            <span class="text-gray-400 font-medium">
-                10:00 - 14:00
-            </span>
-            </div>
-            <div class="flex justify-between items-center">
-            <span class="text-gray-800">
-                Jueves
-            </span>
-            <span class="text-gray-400 font-medium">
-                10:00 - 14:00
-            </span>
-            </div>
-            <div class="flex justify-between items-center">
-            <span class="text-gray-800">
-                Viernes
-            </span>
-            <span class="text-gray-400 font-medium">
-                10:00 - 14:00
-            </span>
-            </div>
-            <div class="flex justify-between items-center">
-            <span class="text-gray-800">
-                Sábado
-            </span>
-            <span class="text-gray-400 font-medium">
-                10:00 - 14:00
-            </span>
-            </div>
-            <div class="flex justify-between items-center">
-            <span class="text-gray-800">
-                Domingo
-            </span>
-            <span class="text-gray-400 font-medium">
-                10:00 - 14:00
-            </span>
-            </div>
-        </div>
-
-        </div>
-
-        </div>
-
-        <!-- TEAM -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm">
-          <h3 class="font-semibold text-gray-700 mb-4">
-            Nuestro Equipo
-          </h3>
-
-          <div class="space-y-3">
-
-            <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-10 h-10 rounded-full"/>
-              <span class="text-gray-700">Dr. Carlos Cardona</span>
-            </div>
-
-            <div class="flex items-center gap-3">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full"/>
-              <span class="text-gray-700">Dra. Ana Ruiz</span>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- MAP -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm">
-          <h3 class="font-semibold text-gray-700 mb-3">
-            Ubicación
-          </h3>
-          <img 
-            src="https://maps.googleapis.com/maps/api/staticmap?center=Medellin&zoom=13&size=300x150&maptype=roadmap"
-            class="w-full rounded-xl"
-          />
-        </div>
-
-      </aside>
-
-    </main>
-  </section>
+    </div>
   `;
+}
+
+export function vetDashboardEvents() {
+  // Event handlers for vet dashboard
 }

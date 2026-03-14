@@ -1,5 +1,47 @@
 // General utilities for the application
 
+// ========== THEME MANAGEMENT ==========
+
+export function getTheme() {
+  return localStorage.getItem('theme') || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+}
+
+export function setTheme(theme) {
+  localStorage.setItem('theme', theme);
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  // Update meta theme-color
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) {
+    metaTheme.content = theme === 'dark' ? '#111827' : '#B9FBC0';
+  }
+}
+
+export function toggleTheme() {
+  const current = getTheme();
+  const next = current === 'dark' ? 'light' : 'dark';
+  setTheme(next);
+  return next;
+}
+
+export function initTheme() {
+  const theme = getTheme();
+  setTheme(theme);
+  
+  // Listen for system preference changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      setTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+}
+
+// ========== DATE & FORMAT UTILITIES ==========
+
 // Format date
 export function formatDate(date) {
   return new Date(date).toLocaleDateString('en-US', {

@@ -1,30 +1,158 @@
-/* ========== COLORES PRINCIPALES ========== */
+/* ========== DESIGN SYSTEM - MEDELLINVET ========== */
 
 :root {
+  /* ===== BRAND COLORS ===== */
+  --paws-green: #B9FBC0;
+  --paws-purple: #F1C0E8;
+  --paws-yellow: #FBF8CC;
+  --paws-blue: #90BDF4;
+  --paws-pink: #FFCFD2;
 
-  /* Branding */
-  --green-pastel: #B9FBC0;
-  --purple-pastel: #F1C0E8;
+  /* ===== SEMANTIC COLORS - LIGHT MODE ===== */
+  --color-primary: #6A4C93;
+  --color-primary-hover: #5a3d80;
+  --color-secondary: #B9FBC0;
+  --color-accent: #F1C0E8;
 
-  /* Secundarios */
-  --yellow-soft: #FBF8CC;
-  --blue-pastel: #90BDF4;
-  --pink-soft: #FFCFD2;
-
-  /* Texto */
-  --text-primary: #333333;
-  --text-soft: #4A4A4A;
+  /* Text */
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --text-inverse: #ffffff;
   --text-highlight: #6A4C93;
 
-  /* Fondo */
-  --background-main: #ffffff;
-  --background-soft: #FBF8CC;
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-card: #ffffff;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
 
-  /* Bordes */
+  /* Borders */
+  --border-light: #e5e7eb;
+  --border-medium: #d1d5db;
+  --border-focus: #6A4C93;
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-error: #ef4444;
+  --color-error-light: #fee2e2;
+  --color-info: #3b82f6;
+  --color-info-light: #dbeafe;
+
+  /* ===== SPACING SCALE ===== */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ===== BORDER RADIUS ===== */
+  --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 
-  /* Sombras */
-  --shadow-soft: 0 4px 10px rgba(0,0,0,0.08);
+  /* ===== SHADOWS ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-family-heading: 'Poppins', system-ui, sans-serif;
+  --font-family-body: 'Roboto', system-ui, sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* ===== TRANSITIONS ===== */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* ===== Z-INDEX SCALE ===== */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-tooltip: 500;
+
+  /* Legacy support */
+  --green-pastel: var(--paws-green);
+  --purple-pastel: var(--paws-purple);
+  --yellow-soft: var(--paws-yellow);
+  --blue-pastel: var(--paws-blue);
+  --pink-soft: var(--paws-pink);
+  --background-main: var(--bg-primary);
+  --background-soft: var(--bg-secondary);
+}
+
+/* ===== DARK MODE ===== */
+[data-theme="dark"] {
+  /* Text */
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --text-inverse: #1f2937;
+  --text-highlight: #c4b5fd;
+
+  /* Backgrounds */
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --bg-tertiary: #374151;
+  --bg-card: #1f2937;
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+
+  /* Borders */
+  --border-light: #374151;
+  --border-medium: #4b5563;
+  --border-focus: #a78bfa;
+
+  /* Adjust brand colors for dark mode (slightly desaturated) */
+  --paws-green: #9ddba8;
+  --paws-purple: #d8a8d4;
+  --paws-yellow: #e8e5b3;
+  --paws-blue: #7aa8e0;
+  --paws-pink: #e8b3b8;
+
+  /* Primary colors for dark mode */
+  --color-primary: #a78bfa;
+  --color-primary-hover: #c4b5fd;
+  --color-secondary: #9ddba8;
+  --color-accent: #d8a8d4;
+
+  /* Shadows for dark mode */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
