@@ -96,19 +96,6 @@ export function emergencyPage() {
     };
 
     return `
-<<<<<<< HEAD
-            <div class="min-h-screen bg-[#FBF8CC] font-roboto px-4 lg:px-8 pt-4 pb-8">
-
-            <!-- Header -->
-            <div class="bg-[#FFCFD2] rounded-[3rem] px-8 py-8 mb-6 mt-4">
-                <div class="max-w-5xl mx-auto flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-[#333333] font-poppins flex items-center gap-3">
-                            <span class="w-3 h-3 bg-[#6A4C93] rounded-full"></span>
-                            24/7 Emergencies
-                        </h1>
-                        <p class="text-[#4A4A4A] mt-2">Urgent veterinary care when you need it most</p>
-=======
         <div class="min-h-screen bg-gradient-to-br from-red-50 via-orange-50/50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
             
             <!-- Header -->
@@ -132,57 +119,10 @@ export function emergencyPage() {
                             </svg>
                             Back to home
                         </button>
->>>>>>> develop
                     </div>
-                    <button onclick="window.location.hash='#/'" class="text-[#6A4C93] hover:text-[#333333] font-medium font-poppins transition">
-                        ← Back to home
-                    </button>
                 </div>
-            </div>
+            </header>
 
-<<<<<<< HEAD
-            <!-- Urgency Selector -->
-            <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="bg-white rounded-3xl shadow-sm p-8 mb-8">
-                    <h2 class="text-2xl font-bold text-[#333333] mb-6 font-poppins">How urgent is the situation?</h2>
-                    <div class="space-y-4" id="urgencyOptions">
-
-                        <label class="flex items-start gap-4 p-5 border-2 border-[#FFCFD2] rounded-3xl hover:border-[#6A4C93] cursor-pointer transition">
-                            <input type="radio" name="urgency" value="10" class="mt-1.5 w-5 h-5 accent-[#6A4C93]">
-                            <div class="flex-1">
-                                <p class="font-bold text-[#333333] flex items-center gap-2 text-lg font-poppins">
-                                    <span class="w-3 h-3 bg-[#FFCFD2] border-2 border-[#6A4C93] rounded-full"></span>
-                                    Critical — Bleeding / Unresponsive / Seizures
-                                </p>
-                                <p class="text-sm text-[#4A4A4A] mt-1">Go to emergency immediately. Life or death situation.</p>
-                            </div>
-                        </label>
-
-                        <label class="flex items-start gap-4 p-5 border-2 border-[#FFCFD2] rounded-3xl hover:border-[#6A4C93] cursor-pointer transition">
-                            <input type="radio" name="urgency" value="5" class="mt-1.5 w-5 h-5 accent-[#6A4C93]">
-                            <div class="flex-1">
-                                <p class="font-bold text-[#333333] flex items-center gap-2 text-lg font-poppins">
-                                    <span class="w-3 h-3 bg-[#90BDF4] rounded-full"></span>
-                                    Urgent — Vomiting / Diarrhea / Moderate pain
-                                </p>
-                                <p class="text-sm text-[#4A4A4A] mt-1">Requires same-day attention. Cannot wait.</p>
-                            </div>
-                        </label>
-
-                        <label class="flex items-start gap-4 p-5 border-2 border-[#FFCFD2] rounded-3xl hover:border-[#6A4C93] cursor-pointer transition">
-                            <input type="radio" name="urgency" value="2" class="mt-1.5 w-5 h-5 accent-[#6A4C93]">
-                            <div class="flex-1">
-                                <p class="font-bold text-[#333333] flex items-center gap-2 text-lg font-poppins">
-                                    <span class="w-3 h-3 bg-[#B9FBC0] rounded-full"></span>
-                                    Consultation — Check-up / Vaccines / Examination
-                                </p>
-                                <p class="text-sm text-[#4A4A4A] mt-1">Can be scheduled. Not urgent.</p>
-                            </div>
-                        </label>
-                    </div>
-
-                    <button id="btn-find-emergency" class="w-full mt-6 bg-[#6A4C93] hover:bg-[#F1C0E8] text-white hover:text-[#333333] font-bold py-4 rounded-3xl transition text-lg font-poppins">
-=======
             <!-- Quick Emergency Call -->
             <section class="bg-gradient-to-r from-red-600 to-red-700 dark:from-red-700 dark:to-red-800 animate-fade-in-up" style="animation-delay: 0.1s">
                 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -254,42 +194,11 @@ export function emergencyPage() {
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
->>>>>>> develop
                         Find Emergency Clinics
                     </button>
                 </div>
 
                 <!-- Emergency Clinics List -->
-<<<<<<< HEAD
-                <div id="emergencyClinicsContainer" class="hidden">
-                    <h2 class="text-2xl font-bold text-[#333333] mb-6 font-poppins">24/7 Clinics Available</h2>
-                    <div id="clinicsList" class="grid md:grid-cols-2 gap-6"></div>
-                </div>
-            </section>
-
-            <!-- Tips -->
-            <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pb-16">
-                <div class="bg-gradient-to-br from-[#F1C0E8] to-[#B9FBC0] rounded-[3rem] p-8">
-                    <h3 class="text-xl font-bold text-[#333333] mb-6 font-poppins">While you get to the clinic</h3>
-                    <ul class="space-y-4 text-[#4A4A4A]">
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Keep your pet calm and in a safe place</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Call before going so they'll be waiting for you</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Have your pet's medical history and vaccines on hand</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Do not give food or water until the vet authorizes it</span>
-                        </li>
-                    </ul>
-=======
                 <div id="emergencyClinicsContainer" class="hidden mt-6 md:mt-8 animate-fade-in-up">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
@@ -327,7 +236,6 @@ export function emergencyPage() {
                             </div>
                         `).join('')}
                     </div>
->>>>>>> develop
                 </div>
             </section>
 

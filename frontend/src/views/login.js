@@ -230,9 +230,6 @@ export function loginEvents() {
 
     if (!form) return;
 
-<<<<<<< HEAD
-    // loginEvents dentro de login.js
-=======
     // Theme toggle
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
@@ -271,7 +268,6 @@ export function loginEvents() {
     }
 
     // Form submission
->>>>>>> develop
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -312,27 +308,8 @@ export function loginEvents() {
                 return;
             }
 
-<<<<<<< HEAD
-            // Guardar sesión
+            // Save session with both keys for compatibility
             localStorage.setItem('user', JSON.stringify(data));
-
-            // Redirigir según rol
-            if(data.role === "owner"){
-                window.location.hash = "#/user-dashboard";
-            }
-            if(data.role === "vet"){
-                window.location.hash = "#/veterinary";
-            }
-            if(data.role === "admin"){
-                window.location.hash = "#/admin-dashboard"; // si luego creas esta vista
-            }
-        } catch {
-            errBox.textContent = 'Connection error. Please try again.';
-        }
-});
-
-}
-=======
             localStorage.setItem('currentUser', JSON.stringify(data));
 
             // Success animation
@@ -343,8 +320,17 @@ export function loginEvents() {
                 <span>Success!</span>
             `;
 
+            // Redirect based on role
             setTimeout(() => {
-                window.location.hash = data.role === 'vet' ? '#/veterinary' : '#/user-dashboard';
+                if (data.role === 'owner') {
+                    window.location.hash = '#/user-dashboard';
+                } else if (data.role === 'vet') {
+                    window.location.hash = '#/veterinary';
+                } else if (data.role === 'admin') {
+                    window.location.hash = '#/admin-dashboard';
+                } else {
+                    window.location.hash = '#/user-dashboard';
+                }
             }, 500);
 
         } catch (error) {
@@ -355,4 +341,3 @@ export function loginEvents() {
         }
     });
 }
->>>>>>> develop

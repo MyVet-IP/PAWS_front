@@ -131,17 +131,6 @@ export function petProfilepage() {
   };
 
   return `
-<<<<<<< HEAD
-  <section class="flex gap-12 p-10 bg-gray-50 min-h-screen">
-
-    <!-- RIGHT CONTENT -->
-    <main class="flex-1">
-
-      <!-- TOP ACTIONS -->
-      <div class="flex justify-end gap-4 mb-6">
-        <button class="border border-pink text-gray-700 px-5 py-2 rounded-full">
-          Medical Report
-=======
   <section class="min-h-screen bg-gradient-to-br from-lavender-light/20 via-white to-softpink-light/20 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
     
     <!-- Mobile Header -->
@@ -151,7 +140,6 @@ export function petProfilepage() {
           <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
->>>>>>> develop
         </button>
         <h1 class="font-bold text-gray-800 dark:text-white">Pet Profile</h1>
         <button class="p-2 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
