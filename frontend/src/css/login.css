@@ -1,0 +1,93 @@
+/* Login View Styles */
+
+/* Login card animations */
+.login-card {
+  animation: slideUp 0.4s ease-out;
+}
+
+/* Tab styles */
+.login-tab {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.login-tab::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: transparent;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.login-tab.active::after {
+  background: #6A4C93;
+}
+
+/* Form input focus effects */
+.login-input:focus {
+  border-color: #6A4C93;
+  box-shadow: 0 0 0 3px rgba(106, 76, 147, 0.1);
+}
+
+/* Google button hover */
+.google-btn {
+  transition: all 0.2s ease;
+}
+
+.google-btn:hover {
+  background: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Password visibility toggle */
+.password-toggle {
+  transition: opacity 0.2s ease;
+}
+
+.password-toggle:hover {
+  opacity: 0.7;
+}
+
+/* Decorative elements */
+.login-decoration {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Dark Mode */
+.dark .login-card {
+  background: #374151;
+  border-color: #4B5563;
+}
+
+.dark .login-input {
+  background: #1F2937;
+  border-color: #4B5563;
+  color: #F9FAFB;
+}
+
+.dark .login-input:focus {
+  border-color: #B9FBC0;
+  box-shadow: 0 0 0 3px rgba(185, 251, 192, 0.1);
+}
+
+.dark .google-btn {
+  background: #374151;
+  border-color: #4B5563;
+  color: #F9FAFB;
+}
+
+.dark .google-btn:hover {
+  background: #4B5563;
+}

@@ -1,0 +1,82 @@
+/* Map Page Styles */
+
+/* Map container */
+.map-container {
+  position: relative;
+  transition: opacity 0.3s ease;
+}
+
+/* Sidebar clinic cards */
+.map-clinic-card {
+  transition: all 0.2s ease;
+  border-radius: 16px;
+}
+
+.map-clinic-card:hover {
+  background: #F9FAFB;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.map-clinic-card.active {
+  background: #F1C0E8;
+  border-color: #6A4C93;
+}
+
+/* Filter buttons */
+.map-filter-btn {
+  transition: all 0.15s ease;
+}
+
+.map-filter-btn:hover,
+.map-filter-btn.active {
+  background: #F1C0E8;
+  color: #6A4C93;
+  border-color: #F1C0E8;
+}
+
+/* Search input */
+.map-search-input {
+  transition: all 0.2s ease;
+}
+
+.map-search-input:focus {
+  border-color: #6A4C93;
+  box-shadow: 0 0 0 3px rgba(106, 76, 147, 0.1);
+}
+
+/* Google Maps info window custom styles */
+.gm-style-iw {
+  border-radius: 12px !important;
+  padding: 8px !important;
+}
+
+.gm-style-iw-d {
+  overflow: hidden !important;
+}
+
+/* Dark Mode */
+.dark .map-sidebar {
+  background: #1F2937;
+  border-color: #374151;
+}
+
+.dark .map-clinic-card {
+  background: #374151;
+  border-color: #4B5563;
+}
+
+.dark .map-clinic-card:hover {
+  background: #4B5563;
+}
+
+.dark .map-filter-btn {
+  background: #374151;
+  border-color: #4B5563;
+  color: #D1D5DB;
+}
+
+.dark .map-search-input {
+  background: #374151;
+  border-color: #4B5563;
+  color: #F9FAFB;
+}
