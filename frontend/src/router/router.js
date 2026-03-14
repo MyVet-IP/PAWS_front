@@ -10,29 +10,14 @@ import { EmergencyButton } from "../components/emergencyButton.js";
 import { registerPage, registerEvents } from "../views/register.js";
 import { dashboardPage, dashboardEvents } from "../views/user-dashboard.js";
 import { vetDashboardPage } from "../views/vet-dashboard.js";
+import { loadMapPage, loadMapEvents } from "../views/map-page.js";
 
-
-function checkAuth(roleRequired){
-  const user = getUser();
-
-  if(!user){
-    window.location.hash = "#/login";
-    return false;
-  }
-
-  if(roleRequired && user.role !== roleRequired){
-    window.location.hash = "#/unauthorized"; // crea esta vista simple
-    return false;
-  }
-
-  return true;
-}
 
 const routes = {
   "/": landingPage,
   "/login": () => {
-    const user= getUser();
-    if(user) {
+    const user = getUser();
+    if (user) {
       window.location.hash = "#/user-dashboard";
       return "";
     }
@@ -44,14 +29,15 @@ const routes = {
   "/emergency": emergencyPage,
   "/pet-profile": petProfilepage,
   "/veterinary": () => {
-    if(!checkAuth("vet")) return;
+    if (!checkAuth("vet")) return;
     return vetDashboardPage();
   },
 
   "/user-dashboard": () => {
-    if(!checkAuth("owner")) return;
+    if (!checkAuth("owner")) return;
     return dashboardPage();
   },
+  "/map-page": loadMapPage,
   "/tips": () => "<h1>Health Tips - In development</h1>",
 
   "/unauthorized": () => `
@@ -66,7 +52,7 @@ const routes = {
 
 export function router() {
   const path = window.location.hash.slice(1) || "/";
-    console.log("Router ejecutado en path:", path);
+  console.log("Router ejecutado en path:", path);
   const app = document.getElementById("app");
 
   const view = routes[path];
@@ -77,7 +63,7 @@ export function router() {
       app.innerHTML = Layout(html);
 
       pageEvents();
-          console.log("EmergencyButton llamado desde router");
+      console.log("EmergencyButton llamado desde router");
       EmergencyButton();
 
       if (path === "/") {
@@ -96,7 +82,11 @@ export function router() {
         dashboardEvents();
       }
 
-      if (path === '/emergency') {
+      if (path === "/map-page") {
+        loadMapEvents();
+      }
+
+      if (path === '/emergencias') {
         emergencyEvents();
       }
 
@@ -134,14 +124,14 @@ function pageEvents() {
 
     if (!link.dataset.listener) {
       link.addEventListener("click", (e) => {
-      const href = link.getAttribute("href");
-      if (href && href !== '#') {
-        window.location.hash = href;
-      }
-    });
+        const href = link.getAttribute("href");
+        if (href && href !== '#') {
+          window.location.hash = href;
+        }
+      });
 
-    link.dataset.listener = "true";
-    
+      link.dataset.listener = "true";
+
     }
   });
 }
