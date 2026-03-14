@@ -96,19 +96,6 @@ export function emergencyPage() {
     };
 
     return `
-<<<<<<< HEAD
-            <div class="min-h-screen bg-[#FBF8CC] font-roboto px-4 lg:px-8 pt-4 pb-8">
-
-            <!-- Header -->
-            <div class="bg-[#FFCFD2] rounded-[3rem] px-8 py-8 mb-6 mt-4">
-                <div class="max-w-5xl mx-auto flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-[#333333] font-poppins flex items-center gap-3">
-                            <span class="w-3 h-3 bg-[#6A4C93] rounded-full"></span>
-                            24/7 Emergencies
-                        </h1>
-                        <p class="text-[#4A4A4A] mt-2">Urgent veterinary care when you need it most</p>
-=======
         <div class="min-h-screen bg-gradient-to-br from-red-50 via-orange-50/50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
             
             <!-- Header -->
@@ -132,7 +119,6 @@ export function emergencyPage() {
                             </svg>
                             Back to home
                         </button>
->>>>>>> develop
                     </div>
                     <button onclick="window.location.hash='#/'" class="text-[#6A4C93] hover:text-[#333333] font-medium font-poppins transition">
                         ← Back to home
@@ -140,7 +126,6 @@ export function emergencyPage() {
                 </div>
             </div>
 
-<<<<<<< HEAD
             <!-- Urgency Selector -->
             <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="bg-white rounded-3xl shadow-sm p-8 mb-8">
@@ -182,114 +167,11 @@ export function emergencyPage() {
                     </div>
 
                     <button id="btn-find-emergency" class="w-full mt-6 bg-[#6A4C93] hover:bg-[#F1C0E8] text-white hover:text-[#333333] font-bold py-4 rounded-3xl transition text-lg font-poppins">
-=======
-            <!-- Quick Emergency Call -->
-            <section class="bg-gradient-to-r from-red-600 to-red-700 dark:from-red-700 dark:to-red-800 animate-fade-in-up" style="animation-delay: 0.1s">
-                <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div class="flex items-center gap-3 text-white">
-                            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center animate-bounce-gentle">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="font-semibold">Emergency Hotline</p>
-                                <p class="text-white/80 text-sm">Available 24/7 for emergencies</p>
-                            </div>
-                        </div>
-                        <a href="tel:+573001234567" class="w-full sm:w-auto bg-white text-red-600 font-bold py-3 px-6 rounded-xl hover:bg-red-50 transition-all flex items-center justify-center gap-2 shadow-lg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                            </svg>
-                            Call Now: +57 300 123 4567
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Urgency Level Selector -->
-            <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-                <div class="card p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.2s">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white">How urgent is the situation?</h2>
-                            <p class="text-gray-500 dark:text-gray-400 text-sm">Select the option that best describes your pet's condition</p>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-4" id="urgencyOptions">
-                        ${urgencyLevels.map((level, i) => `
-                            <label class="urgency-option flex items-start gap-4 p-4 md:p-5 border-2 ${getColorClasses(level.color, 'border')} ${getColorClasses(level.color, 'bg')} rounded-2xl hover:${getColorClasses(level.color, 'borderActive')} cursor-pointer transition-all group" style="animation-delay: ${0.3 + i * 0.1}s" data-color="${level.color}">
-                                <input type="radio" name="urgency" value="${level.value}" class="sr-only">
-                                <div class="flex-shrink-0 w-6 h-6 rounded-full border-2 ${getColorClasses(level.color, 'border')} flex items-center justify-center mt-1 group-hover:border-current transition-colors">
-                                    <div class="radio-dot w-3 h-3 rounded-full ${getColorClasses(level.color, 'dot')} opacity-0 scale-0 transition-all"></div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-3 mb-1">
-                                        <span class="w-3 h-3 rounded-full ${getColorClasses(level.color, 'dot')} ${level.color === 'red' ? 'animate-pulse' : ''}"></span>
-                                        <p class="font-bold text-gray-800 dark:text-white text-lg flex items-center gap-2">
-                                            ${level.label}
-                                            <span class="${getColorClasses(level.color, 'text')} text-sm font-normal hidden sm:inline">
-                                                - ${level.symptoms}
-                                            </span>
-                                        </p>
-                                    </div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300 sm:hidden mb-1">${level.symptoms}</p>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">${level.description}</p>
-                                </div>
-                                <div class="hidden md:flex w-10 h-10 rounded-xl ${getColorClasses(level.color, 'bg')} items-center justify-center ${getColorClasses(level.color, 'text')}">
-                                    ${level.icon}
-                                </div>
-                            </label>
-                        `).join('')}
-                    </div>
-
-                    <button id="btn-find-emergency" class="w-full mt-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 rounded-xl transition-all text-lg flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
->>>>>>> develop
                         Find Emergency Clinics
                     </button>
                 </div>
 
                 <!-- Emergency Clinics List -->
-<<<<<<< HEAD
-                <div id="emergencyClinicsContainer" class="hidden">
-                    <h2 class="text-2xl font-bold text-[#333333] mb-6 font-poppins">24/7 Clinics Available</h2>
-                    <div id="clinicsList" class="grid md:grid-cols-2 gap-6"></div>
-                </div>
-            </section>
-
-            <!-- Tips -->
-            <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pb-16">
-                <div class="bg-gradient-to-br from-[#F1C0E8] to-[#B9FBC0] rounded-[3rem] p-8">
-                    <h3 class="text-xl font-bold text-[#333333] mb-6 font-poppins">While you get to the clinic</h3>
-                    <ul class="space-y-4 text-[#4A4A4A]">
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Keep your pet calm and in a safe place</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Call before going so they'll be waiting for you</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Have your pet's medical history and vaccines on hand</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-[#6A4C93] font-bold text-xs">✓</span>
-                            <span>Do not give food or water until the vet authorizes it</span>
-                        </li>
-                    </ul>
-=======
                 <div id="emergencyClinicsContainer" class="hidden mt-6 md:mt-8 animate-fade-in-up">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
@@ -327,7 +209,6 @@ export function emergencyPage() {
                             </div>
                         `).join('')}
                     </div>
->>>>>>> develop
                 </div>
             </section>
 

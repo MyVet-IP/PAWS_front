@@ -1,0 +1,72 @@
+/* Clinics View Styles /
+
+/ Clinic cards /
+.clinic-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.clinic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+}
+
+/ Filter chips /
+.filter-chip {
+  transition: all 0.15s ease;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+  background: #6A4C93;
+  border-color: #6A4C93;
+  color: white;
+}
+
+/ Service tags /
+.service-tag {
+  transition: background 0.2s ease;
+}
+
+.service-tag:hover {
+  background: rgba(106, 76, 147, 0.15);
+}
+
+/ Rating stars animation /
+.star-rating {
+  transition: transform 0.2s ease;
+}
+
+.star-rating:hover {
+  transform: scale(1.1);
+}
+
+/ Search input /
+.search-input:focus {
+  border-color: #6A4C93;
+  box-shadow: 0 0 0 3px rgba(106, 76, 147, 0.1);
+}
+
+/ Dark Mode */
+.dark .clinic-card {
+  background: #374151;
+  border-color: #4B5563;
+}
+
+.dark .filter-chip {
+  background: #374151;
+  border-color: #4B5563;
+  color: #D1D5DB;
+}
+
+.dark .filter-chip:hover,
+.dark .filter-chip.active {
+  background: #B9FBC0;
+  border-color: #B9FBC0;
+  color: #1F2937;
+}
+
+.dark .search-input {
+  background: #1F2937;
+  border-color: #4B5563;
+  color: #F9FAFB;
+}

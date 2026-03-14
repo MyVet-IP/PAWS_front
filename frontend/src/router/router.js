@@ -11,7 +11,7 @@ import { registerPage, registerEvents } from "../views/register.js";
 import { dashboardPage, dashboardEvents } from "../views/user-dashboard.js";
 import { vetDashboardPage } from "../views/vet-dashboard.js";
 import { loadMapPage, loadMapEvents } from "../views/map-page.js";
-
+import { healthTipsPage } from "../views/health-tips.js"
 
 const routes = {
   "/": landingPage,
@@ -28,17 +28,14 @@ const routes = {
   "/clinics": clinicsPage,
   "/emergency": emergencyPage,
   "/pet-profile": petProfilepage,
-  "/veterinary": () => {
-    if (!checkAuth("vet")) return;
-    return vetDashboardPage();
-  },
+  "/veterinary": vetDashboardPage,
 
   "/user-dashboard": () => {
     if (!checkAuth("owner")) return;
     return dashboardPage();
   },
   "/map-page": loadMapPage,
-  "/tips": () => "<h1>Health Tips - In development</h1>",
+  "/tips": () => healthTipsPage,
 
   "/unauthorized": () => `
     <div class="p-10 text-center">
