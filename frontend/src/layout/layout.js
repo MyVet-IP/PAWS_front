@@ -17,13 +17,13 @@ export function Layout(content) {
         const html = `
           ${NavbarController()}
 
-          <main class="p-6">
+          <main class="min-h-screen">
             ${content}
           </main>
           ${Footer()}
         `;
 
-        setTimeout(navbarEvents,0);
+        setTimeout(navbarEvents, 0);
 
         return html;
       }
