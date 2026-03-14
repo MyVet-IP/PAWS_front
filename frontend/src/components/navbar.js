@@ -1,7 +1,8 @@
 import { getUser } from "../utils.js";
 
 export function navbarController() {
-    const user = getUser();
+
+  const user = getUser();
 
     // If user is logged in, don't show the guest navbar
     if (user) return "";

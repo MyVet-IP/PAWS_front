@@ -28,7 +28,10 @@ const routes = {
   "/clinics": clinicsPage,
   "/emergency": emergencyPage,
   "/pet-profile": petProfilepage,
-  "/veterinary": vetDashboardPage,
+  "/veterinary": () => {
+    if (!checkAuth("vet")) return;
+    return vetDashboardPage();
+  },
 
   "/user-dashboard": () => {
     if (!checkAuth("owner")) return;
