@@ -230,6 +230,9 @@ export function loginEvents() {
 
     if (!form) return;
 
+<<<<<<< HEAD
+    // loginEvents dentro de login.js
+=======
     // Theme toggle
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
@@ -268,6 +271,7 @@ export function loginEvents() {
     }
 
     // Form submission
+>>>>>>> develop
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -308,6 +312,27 @@ export function loginEvents() {
                 return;
             }
 
+<<<<<<< HEAD
+            // Guardar sesión
+            localStorage.setItem('user', JSON.stringify(data));
+
+            // Redirigir según rol
+            if(data.role === "owner"){
+                window.location.hash = "#/user-dashboard";
+            }
+            if(data.role === "vet"){
+                window.location.hash = "#/veterinary";
+            }
+            if(data.role === "admin"){
+                window.location.hash = "#/admin-dashboard"; // si luego creas esta vista
+            }
+        } catch {
+            errBox.textContent = 'Connection error. Please try again.';
+        }
+});
+
+}
+=======
             localStorage.setItem('currentUser', JSON.stringify(data));
 
             // Success animation
@@ -330,3 +355,4 @@ export function loginEvents() {
         }
     });
 }
+>>>>>>> develop

@@ -1,37 +1,70 @@
+import { getUser } from "../utils.js";
+import { Layout } from "../layout/layout.js";
+
 import { clinicsPage } from "../views/clinics-view.js";
 import { petProfilepage } from "../views/pet-profile.js";
 import { loginPage, loginEvents } from "../views/login.js";
 import { landingPage, landingEvents } from "../views/landing-page.js";
 import { emergencyPage, emergencyEvents } from "../views/emergency.js";
+import { EmergencyButton } from "../components/emergencyButton.js";
 import { registerPage, registerEvents } from "../views/register.js";
 import { dashboardPage, dashboardEvents } from "../views/user-dashboard.js";
 import { vetDashboardPage } from "../views/vet-dashboard.js";
-import { loadMapPage, loadMapEvents} from "../views/map-page.js";
+import { loadMapPage, loadMapEvents } from "../views/map-page.js";
 
 
 const routes = {
   "/": landingPage,
-  "/login": loginPage,
+  "/login": () => {
+    const user = getUser();
+    if (user) {
+      window.location.hash = "#/user-dashboard";
+      return "";
+    }
+    return loginPage();
+  },
+
   "/register": registerPage,
-  "/clinicas": clinicsPage,
-  "/emergencias": emergencyPage,
+  "/clinics": clinicsPage,
+  "/emergency": emergencyPage,
   "/pet-profile": petProfilepage,
-  "/veterinary": vetDashboardPage,
-  "/user-dashboard": dashboardPage,
+  "/veterinary": () => {
+    if (!checkAuth("vet")) return;
+    return vetDashboardPage();
+  },
+
+  "/user-dashboard": () => {
+    if (!checkAuth("owner")) return;
+    return dashboardPage();
+  },
   "/map-page": loadMapPage,
-  "/tips": () => "<h1>Health Tips - In development</h1>"
+  "/tips": () => "<h1>Health Tips - In development</h1>",
+
+  "/unauthorized": () => `
+    <div class="p-10 text-center">
+      <h1 class="text-2xl font-bold text-red-500">
+        Unauthorized access
+      </h1>
+      <p>You don't have permission to view this page.</p>
+    </div>
+  `
 };
 
 export function router() {
   const path = window.location.hash.slice(1) || "/";
+  console.log("Router ejecutado en path:", path);
   const app = document.getElementById("app");
 
   const view = routes[path];
 
   try {
     if (view) {
-      app.innerHTML = view();
+      const html = view();
+      app.innerHTML = Layout(html);
+
       pageEvents();
+      console.log("EmergencyButton llamado desde router");
+      EmergencyButton();
 
       if (path === "/") {
         landingEvents();
@@ -45,10 +78,10 @@ export function router() {
         registerEvents();
       }
 
-      if (path === '/user-dashboard') {
+      if (path === "/user-dashboard") {
         dashboardEvents();
       }
-      
+
       if (path === "/map-page") {
         loadMapEvents();
       }
@@ -82,17 +115,26 @@ function pageEvents() {
   if (searchBtn) {
     searchBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '#/clinicas';
+      window.location.hash = '#/clinics';
     });
   }
 
   // Navbar links
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const href = link.getAttribute('href');
-      if (href && href !== '#') {
-        window.location.hash = href;
-      }
-    });
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+
+    if (!link.dataset.listener) {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href && href !== '#') {
+          window.location.hash = href;
+        }
+      });
+
+      link.dataset.listener = "true";
+
+    }
   });
 }
+
+
+
